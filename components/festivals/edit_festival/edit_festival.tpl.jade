@@ -1,0 +1,32 @@
+with doc
+    .ui.container.basic.segment
+        .ui.center.aligned.header Edit Festival
+        .ui.form
+            +edit_title
+            +edit_image
+            +edit_link
+            .fields
+                .field
+                    label Start Date/Time
+                    .ui.left.icon.input
+                        i.calendar.icon
+                        input#start_datetime(type='datetime-local' value=start_datetime)
+                // .field
+                //     label Start Time
+                //     input#start_time(type='time' value=start_time)
+                .field
+                    label End Date/Time
+                    .ui.left.icon.input
+                        i.calendar.icon
+                        input#end_datetime(type='datetime-local' value=end_datetime)
+            +edit_location
+            +edit_description
+            +edit_tags
+            +publish_button
+            +edit_featured
+            if isInRole 'admin'
+                +edit_type
+            .ui.center.aligned.basic.segment
+                if tags
+                    #save.ui.big.green.button Save
+                +delete_button

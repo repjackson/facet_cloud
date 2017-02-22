@@ -1,0 +1,33 @@
+template(name='featured_festivals')
+    .ui.horizontal.divider.header Featured Festivals
+    .ui.cards
+        each featured_festivals
+            +festival_card
+        
+        
+template(name='festival_card')
+    .ui.card
+        .image
+            a(href="/view_festival/#{_id}")
+                img.ui.fluid.image(src="{{c.url image_id height=400 width=800 background='white' crop='pad'}}")
+                // img.ui.medium.image(src="{{c.url image_id }}")
+        .content
+            h3.ui.red.header.make-uppercase 
+                a(href="/view_festival/#{_id}") #{title}
+            // if link
+            //     .meta
+            //         a(href=link target='_blank') #{link}
+            each eco_tags
+                .ui.compact.tiny.circular.button.eco_tag(class=eco_tag_class) #{this}
+        if isInRole 'admin'
+            .extra.content
+                a.ui.icon.basic.button(href="/view_festival/#{_id}") 
+                    i.unhide.icon
+                a.ui.icon.basic.button(href="/edit/#{_id}") 
+                    i.pencil.icon
+                i.red.configure.icon
+                unless published
+                    .ui.basic.red.tiny.label 
+                        |Unpub
+                .ui.tiny.basic.label Type: #{type}
+            .extra.content
