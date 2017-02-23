@@ -1,0 +1,28 @@
+.ui.item
+    .image
+        a(href="/view/#{_id}")
+            img.ui.fluid.image(src="{{c.url image_id height=400 width=800 background='white' crop='pad'}}")
+            // img.ui.medium.image(src="{{c.url image_id }}")
+    .content
+        .header 
+            a(href="/view/#{_id}") #{title}
+        .meta
+            a(href=link target='_blank') #{link}
+            each tags
+                .ui.compact.tiny.circular.button.doc_tag(class=tag_class) #{this}
+        .description
+            |!{description}
+        .extra
+            +favorite
+            +voting
+    // if isInRole 'admin'
+    //     .extra
+    //         a.ui.icon.basic.button(href="/view/#{_id}") 
+    //             i.unhide.icon
+    //         a.ui.icon.basic.button(href="/edit/#{_id}") 
+    //             i.pencil.icon
+    //         i.red.configure.icon
+    //         unless published
+    //             .ui.basic.red.tiny.label 
+    //                 |Unpub
+    //         .ui.tiny.basic.label Type: #{type}

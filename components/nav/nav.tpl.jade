@@ -1,8 +1,10 @@
 .ui.stackable.borderless.menu
     .ui.container
-        a.header.icon.item(href='/' class="{{isActivePath '/'}}")
-            h1 JamsAt
-        a.item(href='/festivals' class="{{isActivePath '/festivals'}}") Festivals
+        a.ui.header.item(href='/' class="{{isActivePath '/'}}") Jackson Web Design
+        a.item(href='/services' class="{{isActivePath '/services'}}") Services
+        a.item(href='/events' class="{{isActivePath '/events'}}") Events
+        a.item(href='/posts' class="{{isActivePath '/posts'}}") Blog
+        a.item(href='/demo' class="{{isActivePath '/demo'}}") UI Demo
         .right.menu 
             a.item(href='/admin/content' class="{{isActivePath '/admin/'}}")
                 i.configure.icon

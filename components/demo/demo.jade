@@ -1,0 +1,17 @@
+template(name='demo')
+    .ui.container
+        .ui.center.aligned.header What We Can Do
+        .ui.header Our Process
+        p We build every site with our components.  It's up to you how to use them.  
+        .ui.header Components
+        .ui.header Facet Drill Down
+        +cloud 
+        .ui.header Card View
+        .ui.stackable.cards
+            each docs
+                +card_view
+        .ui.header Item View
+        .ui.divided.items
+            each docs
+                +item_view
+                

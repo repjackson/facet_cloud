@@ -1,19 +1,19 @@
 
-FlowRouter.route '/view_festival/:doc_id', action: (params) ->
+FlowRouter.route '/view/:doc_id', action: (params) ->
     BlazeLayout.render 'layout',
-        main: 'festival_page'
+        main: 'page_view'
 
 
 
 if Meteor.isClient
-    Template.festival_page.onCreated ->
+    Template.page_view.onCreated ->
         self = @
         self.autorun ->
             self.subscribe 'doc', FlowRouter.getParam('doc_id')
     
     
     
-    Template.festival_page.helpers
+    Template.page_view.helpers
         item: ->
             Docs.findOne FlowRouter.getParam('doc_id')
     
@@ -22,7 +22,7 @@ if Meteor.isClient
         end_time: -> moment(@end_datetime).format("h:mm a")
 
     
-    Template.festival_page.events
+    Template.page_view.events
         'click .edit': ->
             doc_id = FlowRouter.getParam('doc_id')
             FlowRouter.go "/edit/#{doc_id}"

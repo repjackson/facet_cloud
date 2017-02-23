@@ -12,12 +12,6 @@ with item
                 .description
                     |!{description}
             .five.wide.column
-                h3.ui.header When
-                    .ui.basic.segment
-                        h3
-                            .ui.sub.header #{day} 
-                            .ui.sub.header #{start_time} to #{end_time}
-
                 h2.ui.header Tags
                 each tags
                     .ui.basic.label #{this}
@@ -32,6 +26,6 @@ with item
                     .extra.content
                         .ui.divider
                         i.large.red.configure.icon
-                        a(href="/edit_festival/#{_id}").ui.basic.button
+                        a(href="/edit/#{_id}").ui.basic.button
                             i.pencil.icon
                             |Edit
