@@ -65,6 +65,9 @@ if Meteor.isClient
             selected_tags.push doc.name
             $('#search').val ''
 
+        'click #add': ->
+            Meteor.call 'add', (err,id)->
+                FlowRouter.go "/edit/#{id}"
 
 
 if Meteor.isServer

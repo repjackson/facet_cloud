@@ -9,7 +9,7 @@
 	"galaxy.meteor.com": {
 		"env": {
 			"MONGO_URL": "mongodb://jacksonadmin:Turnf34ragainst!@aws-us-east-1-portal.21.dblayer.com:10444/jwddb?ssl=true",
-			"ROOT_URL": "https://www.jacksonwebdesign.io"
+			"ROOT_URL": "https://www.jackson.technology"
 		}
 	}
 }

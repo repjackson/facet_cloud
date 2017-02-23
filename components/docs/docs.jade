@@ -26,11 +26,6 @@
 
 template(name='docs')
     .ui.container
-        div
-            #add.ui.green.basic.button
-                i.plus.icon
-                | Add
-        +cloud
         each docs
             +view
 
@@ -56,4 +51,4 @@ template(name='view')
                     i.pencil.icon.icon
             else
                 | by #{author.username} #{when}
-            +user_blurb
+            // +user_blurb
