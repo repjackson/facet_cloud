@@ -2,8 +2,10 @@
 
 template(name='docs')
     .ui.container
-        each docs
-            +view
+    unless docs.length
+        .ui.header Hi
+    each docs
+        +view
 
         
 
