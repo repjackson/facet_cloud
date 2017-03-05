@@ -14,10 +14,11 @@ Meteor.publish 'hub_users', ->
     #         date: 1
 
 
-Meteor.publish 'all_docs', (selected_content_tags=[])->
+Meteor.publish 'jacksontech_docs', (selected_content_tags=[])->
     self = @
     match = {}
     if selected_content_tags.length > 0 then match.tags = $all: selected_content_tags
+    match.group_id = 'CiD3esYNw4oRdL5PW'
 
     Docs.find match,
         limit: 20
@@ -28,6 +29,7 @@ Meteor.publish 'all_tags', (selected_tags)->
     self = @
     match = {}
     if selected_tags.length > 0 then match.tags = $all: selected_tags
+    match.group_id = 'CiD3esYNw4oRdL5PW'
 
     cloud = Docs.aggregate [
         { $match: match }

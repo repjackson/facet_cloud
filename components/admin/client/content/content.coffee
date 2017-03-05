@@ -2,7 +2,7 @@
 Template.content.onCreated ->
     self = @
     self.autorun ->
-        self.subscribe 'all_docs'
+        self.subscribe 'jacksontech_docs'
 
 
 Template.content.helpers

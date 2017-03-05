@@ -4,13 +4,14 @@ Docs.before.insert (userId, doc)->
     doc.timestamp = Date.now()
     doc.author_id = Meteor.userId()
     doc.points = 0
+    doc.group_id = 'CiD3esYNw4oRdL5PW'
     doc.down_voters = []
     doc.up_voters = []
     return
 
 Docs.after.update ((userId, doc, fieldNames, modifier, options) ->
     doc.tag_count = doc.tags?.length
-    Meteor.call 'generate_authored_cloud'
+    # Meteor.call 'generate_authored_cloud'
 ), fetchPrevious: true
 
 
@@ -40,7 +41,7 @@ if Meteor.isClient
             Docs.find { }, 
                 sort:
                     tag_count: 1
-                limit: 1
+                limit: 5
     
         tag_class: -> if @valueOf() in selected_tags.array() then 'primary' else 'basic'
 
@@ -63,31 +64,3 @@ if Meteor.isClient
             Meteor.call 'add', (err,id)->
                 FlowRouter.go "/edit/#{id}"
 
-
-
-if Meteor.isServer
-    Docs.allow
-        insert: (userId, doc) -> doc.author_id is userId
-        update: (userId, doc) -> doc.author_id is userId or Roles.userIsInRole(userId, 'admin')
-        remove: (userId, doc) -> doc.author_id is userId or Roles.userIsInRole(userId, 'admin')
-    
-    
-    
-    
-    Meteor.publish 'docs', (selected_tags, filter)->
-    
-        self = @
-        match = {}
-        # if selected_tags.length > 0 then match.tags = $all: selected_tags
-        match.tags = $all: selected_tags
-        if filter then match.type = filter
-    
-        Docs.find match,
-            limit: 5
-            
-    
-    Meteor.publish 'doc', (id)->
-        Docs.find id
-    
-    
-    
