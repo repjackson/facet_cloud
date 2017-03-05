@@ -1,0 +1,28 @@
+with item
+    .ui.container
+        .header-wrapper
+            if image_id
+                img.ui.centered.image(src="{{c.url image_id }}")
+        .ui.basic.segment
+            .ui.stackable.divided.grid
+                .eleven.wide.column
+                    h1.ui.header #{title}
+                    .description
+                        |!{description}
+                .five.wide.column
+                    h3.impact-header Tags
+                    .ui.basic.segment
+                        each tags
+                            .ui.basic.label #{this}
+                    if isInRole 'admin'
+                        h3.impact-header 
+                            i.red.configure.icon
+                            |Admin
+                        a.ui.basic.fluid.button(href="/item/edit/#{this._id}") 
+                            i.pencil.icon
+                            |Edit
+                        if published
+                            .ui.green.label Published
+                        else
+                            .ui.red.label Unpublished                        
+                            

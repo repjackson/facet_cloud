@@ -1,0 +1,13 @@
+with item
+    .ui.container.basic.segment
+        .ui.center.aligned.header Edit Item
+        .ui.form
+            +edit_title
+            +edit_image
+            +edit_price
+            +edit_description
+            +edit_tags
+            +publish_button
+            if title
+                #save_item.ui.large.green.button Save
+            +delete_button
