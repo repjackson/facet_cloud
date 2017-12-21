@@ -1,33 +1,34 @@
-.ui.stackable.borderless.menu
+.ui.stackable.borderless.inverted.menu
     .ui.container
-        a.ui.header.item(href='/' class="{{isActivePath '/'}}") Jackson Technology
-        a.item(href='/services' class="{{isActivePath '/services'}}") Services
+        a.ui.header.item(href='/' class="{{isActivePath '/'}}") 
+            .facet_black
+                |FC
+        // a.item(href='/services' class="{{isActivePath '/services'}}") Services
         // a.item(href='/events' class="{{isActivePath '/events'}}") Event Demo
         a.item(href='/posts' class="{{isActivePath '/posts'}}") Blog
-        a.item(href='/marketplace' class="{{isActivePath '/marketplace'}}") Marketplace
-        a.item(href='/clients' class="{{isActivePath '/clients'}}") Clients
-        a.item(href='/demo' class="{{isActivePath '/demo'}}") UI Demo
-        a.item(href='/contact' class="{{isActivePath '/contact'}}") Contact
+        a.item(href='/sites' class="{{isActivePath '/sites'}}") Sites
+        // a.item(href='/demo' class="{{isActivePath '/demo'}}") UI Demo
+        // a.item(href='/contact' class="{{isActivePath '/contact'}}") Contact
         .right.menu 
-            a.item(href='/admin/content' class="{{isActivePath '/admin/'}}")
-                i.configure.icon
-                | Admin
-            // a.item(href='/messages' class="{{isActivePath '/messages'}}")
-            //     i.mail.icon
+            a.icon.item(href='/admin/content' class="{{isActivePath '/admin/'}}")
+                i.configure.large.icon
+                // | Admin
+            a.icon.item(href='/messages' class="{{isActivePath '/messages'}}")
+                i.mail.large.icon
             if currentUser
-                a.item(href="/account/profile/edit" class="{{isActivePath '/account/profile/edit'}}")
+                a.icon.item(href="/account/profile/edit" class="{{isActivePath '/account/profile/edit'}}")
                     if currentUser.image_id
                         img.ui.avatar.image(src="{{c.url currentUser.image_id width=50 height=50 gravity='face' crop='fill'}}")
                     else
-                        i.user.icon
-                    if currentUser.name
-                        | #{currentUser.name}
-                    else
-                        | Profile
-                a#logout.ui.item(href='#') 
-                    i.sign.out.icon
-                    |Sign Out
+                        i.user.large.icon
+                    // if currentUser.name
+                    //     | #{currentUser.name}
+                    // else
+                        // | Profile
+                a#logout.ui.icon.item(href='#') 
+                    i.sign.out.large.icon
+                    // |Sign Out
             else
-                a.ui.item(href='/sign-in') 
-                    i.sign.in.icon
-                    |Sign In
+                a.ui.icon.item(href='/sign-in') 
+                    i.sign.in.large.icon
+                    // |Sign In
