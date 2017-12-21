@@ -1,0 +1,242 @@
+// template(name='response')
+//     with response
+//         .ui.blue.segment
+//             .ui.header
+//                 |Your Response
+//                 +published_label
+//             if editing_mode
+//                 .content
+//                     .ui.form
+//                         .field
+//                             textarea#text(rows='3') #{text}
+//                 .content
+//                     .save_doc.ui.basic.big.circular.icon.button
+//                         i.big.green.check.icon
+//                     +published
+//                     +delete_button
+//             else
+//                 .content
+//                     .large130 #{text}
+//                 .content
+//                     if is_author
+//                         .edit_this.ui.basic.large.circular.icon.button
+//                             i.blue.pencil.icon
+
+
+// template(name='answer')
+//     .ui.fluid.card
+//         unless editing
+//             if content
+//                 .content 
+//                     .large130 !{content}
+//                     // .large-text !{content}
+//             if body
+//                 .content 
+//                     .large130 #{text}
+//             .content
+//                 .ui.horizontal.list
+//                     if isInRole 'admin'
+//                         .item
+//                             +published_label
+//                     // .item
+//                     //     +view_full_button
+//                     .item
+//                         +author_info
+//                     .item
+//                         small #{when}
+//                     .item
+//                         +mark_read
+//                     // .item
+//                     //     #reply.ui.basic.circular.icon.button(tooltip='Reply')
+//                     //         +icon48 name='response' classes='ui mini inline image'
+//                     .item
+//                         if readers
+//                             | Seen by:
+//                         each readers
+//                             .ui.tiny.basic.label #{name}
+//                         // img.ui.avatar.image(src="{{c.url profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
+
+template(name='q_a')
+    .ui.stackable.grid
+        .ui.four.wide.column
+            .ui.dividing.header Sessions
+            .ui.list
+                each sessions
+                    .item
+                        .header
+                            +author_info
+                            |#{when}
+        .ui.ten.wide.column
+            .ui.dividing.header Questions
+            each questions
+                .ui.fluid.card
+                    .content
+                        .header #{title}
+                        if is_admin
+                            +published_label
+        
+
+template(name='sessions')
+    if currentUser
+        +dividing_header icon='time' label='Your Sessions'
+        .ui.fluid.cards
+            each my_sessions
+                +session_card
+    else
+        .ui.header Log in to take quiz and track results.
+
+
+template(name='list_item')
+    .ui.fluid.card
+        unless editing
+            if title
+                .content
+                    .header 
+                        if completed
+                            +icon48 name='checkmark' classes='ui inline image'
+                        if icon_class
+                            +icon48 name=icon_class classes='ui inline image'
+                        if number
+                            |#{number}: 
+                        |#{title}
+                        if end_date
+                            |by #{end_date}
+                    if slug
+                        .meta Slug: #{slug}
+            // if tags
+            //     .content
+            //         +view_tags
+            .content
+                if child_count
+                    .ui.basic.label(data-tooltip="#{child_count} Responses")
+                        +icon48 name='flow-chart' classes='ui tiny inline image'
+                        |#{child_count}
+                if is_admin
+                    +published_label
+                    +edit_parent_id
+                if doc.can_vote
+                    +voting
+                +view_full_button
+                +author_info
+                |#{when}
+                if is_author
+                    if doc.can_add
+                        +session_edit_button
+        if editing
+            .content
+                each child_view_fields
+                    +Template.dynamic template=this data=doc
+            .content
+                +published
+                +session_edit_button
+
+
+
+
+template(name='card_view')
+    .ui.fluid.card
+        unless editing
+            if show_header
+                .content
+                    a.header(href="/view/#{_id}")
+                        // if completed
+                        //     +icon48 name='checkmark' classes='ui inline image'
+                        if icon_class
+                            +icon48 name=icon_class classes='ui inline image'
+                        if number
+                            |#{number}: 
+                        |#{title}
+                        if end_date
+                            |by #{end_date}
+                        if dollar_price
+                            .right.floated
+                                |$#{dollar_price}
+                    if slug
+                        .meta Slug: #{slug}
+            if youtube
+                +youtube
+            if image_id
+                .image
+                    img(src="{{c.url image_id}}")
+            if image_url
+                .ui.image
+                    img(src=image_url)
+            if content
+                .content 
+                    .large130 !{content}
+                    // .large-text !{content}
+                    if author_name
+                        h4.ui.header
+                            |- #{author_name}
+            if link
+                .content
+                    a(href=link target='_blank') #{link}
+            if time_marker
+                .content
+                    h5.ui.header Time Marker: #{time_marker}
+            if text
+                .content #{text}
+            if tags
+                .content
+                    +view_tags
+            // if intention_tags
+            //     .content
+            //         +intention_tags
+            // if location_tags
+            //     .content
+            //         +location_tags
+            .content
+                if child_count
+                    .ui.basic.label(data-tooltip="#{child_count} Child Documents")
+                        +icon48 name='flow-chart' classes='ui tiny inline image'
+                        |#{child_count}
+                if is_admin
+                    +type
+                    +published_label
+                    // +edit_parent_id
+                if doc.can_vote
+                    +voting
+                if doc.can_bookmark
+                    +bookmark_button
+                if doc.can_mark_resonates
+                    +resonate_button
+                if doc.can_reflect
+                    +reflect_button
+            if favorite_count
+                .content
+                    strong
+                        +icon48 name='heart' classes='ui mini inline image'
+                        | Resonates with #{favorite_count} 
+                    .ui.divided.horizontal.list
+                        each favoriter_list
+                            .item
+                                img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+                                .content
+                                    .header
+                                        |#{name}
+            if upvoters
+                .content
+                    strong
+                        +icon48 name='thumbs-up' classes='ui mini inline image'
+                        | Upvoted by
+                    .ui.divided.horizontal.list
+                        each upvoter_list
+                            .item
+                                img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+                                .content
+                                    .header
+                                        |#{name}
+            .content
+                +author_info
+                |#{when}
+                if can_edit
+                    // if doc.can_add
+                    +session_edit_button
+                +view_full_button
+        if editing
+            .content
+                each child_view_fields
+                    +Template.dynamic template=this data=parent_doc
+            .content
+                +published
+                +session_edit_button

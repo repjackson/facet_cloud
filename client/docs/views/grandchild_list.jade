@@ -1,0 +1,29 @@
+template(name='grandchild_list')
+    .ui.fluid.card
+        .content
+            h3.ui.center.aligned.header 
+                if icon_class
+                    +icon48 name=icon_class classes='ui spaced image'
+                a(href="/view/#{_id}") #{title}
+            // .meta
+            //     +icon48 name='hashtag' classes='ui mini inline image'
+            //     each tags
+            //         .ui.tiny.circular.compact.button.tag(class=tag_class) #{this}
+        .content
+            .ui.basic.label(data-tooltip="#{child_count} Responses")
+                +icon48 name='flow-chart' classes='ui tiny inline image'
+                |#{child_count}
+            .ui.list
+                each grandchildren
+                    .item 
+                        // #{number}: #{title}
+                        |#{text}
+        .content
+            |by
+            if author.profile.image_id
+                img.ui.avatar.image(src="{{c.url author.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
+            |#{author.name}
+            with author
+                +staus_indicator
+            |#{when}
+            +view_full_button

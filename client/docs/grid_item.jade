@@ -1,0 +1,74 @@
+template(name='grid_item')
+    if editing
+        .ui.fluid.card
+            .content
+                +title
+                // +type
+                +icon_class
+                +number
+                +edit_parent_id
+                +published
+                +session_edit_button
+                // +delete_button
+    else
+        .ui.center.aligned.card(class=card_class)
+            if is_admin
+                .ui.top.left.attached.basic.label
+                    i.unlock.alternate.icon
+                    |#{access}
+                .ui.top.right.attached.basic.label
+                    i.checkmark.icon
+                    |#{completion_type}
+            .content
+                if can_access
+                    a.ui.image(href="/view/#{_id}")
+                        if image_url
+                            img.ui.tiny.inline.image(src=image_url)
+                        else if completed
+                            +icon96 name=icon_class
+                        else
+                            if icon_class
+                                +dots100 name=icon_class
+                            else
+                                +icon96 name='circle'
+                    .ui.hidden.divider
+                    a.header(href="/view/#{_id}")
+                        if is_admin
+                            if number
+                                |#{number}: 
+                        |#{title}
+                else
+                    .ui.image
+                        if image_url
+                            img.ui.tiny.inline.image(src=image_url)
+                        else if completed
+                            +icon96 name=icon_class
+                        else
+                            if icon_class
+                                +dots100 name=icon_class
+                            else
+                                +icon96 name='circle'
+                    .ui.hidden.divider
+                    .header #{title}
+            if is_admin
+                +title
+                +icon_class
+                if body
+                    .ui.basic.label #{text}
+                +published
+        
+             
+// template(name='card')
+//     .ui.fluid.card
+//         .content
+//             // +youtube
+//             // +image_url
+//             +content
+//             // +image_id
+//             +tags
+//             if is_author
+//                 +session_edit_button
+//                 if editing
+//                     +delete_button
+                        
+                        

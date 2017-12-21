@@ -10,8 +10,8 @@
 	},
 	"galaxy.meteor.com": {
 		"env": {
-			"MONGO_URL": "mongodb://facetadmin:Turnf34ragainst!@aws-us-east-1-portal.21.dblayer.com:10444/facetdb?ssl=true",
-			"ROOT_URL": "https://www.jackson.technology"
+			"MONGO_URL": "mongodb://toridbadmin:Turnf34ragainstthose!@aws-us-east-1-portal.21.dblayer.com:10444/toridb?ssl=true",
+			"ROOT_URL": "https://www.facet.cloud"
 		}
 	}
 }

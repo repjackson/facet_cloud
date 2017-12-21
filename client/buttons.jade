@@ -1,0 +1,311 @@
+template(name='voting')
+    .ui.basic.circular.icon.button
+        i.thumbs.up.link.big.icon.vote_up(class=vote_up_button_class)
+    .ui.basic.circular.icon.button
+        i.thumbs.down.link.big.icon.vote_down(class=vote_down_button_class)
+        // |#{points}
+
+template(name='thanks_button')
+    .ui.circular.icon.button.vote_up(class=thanks_button_class data-tooltip="Thank #{author.profile.first_name} for Sharing")
+        +icon24 name='applause' classes='ui mini inline image'
+        // img.ui.mini.image(src="https://png.icons8.com/pray-filled/ios7/50" width="50" height="50")
+        // if said_thanks
+        //     |Thanks #{author.profile.first_name}
+        // else
+        //     | Thank #{author.profile.first_name} for Sharing
+    // #thanks_modal.ui.small.modal
+    //     i.close.icon
+    //     .header Send #{author.profile.first_name} an optional private message?
+    //     .content
+    //         // img.ui.avatar.image(src="{{c.url author.profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+    //         .ui.fluid.input
+    //             input#thanks_message_text(type='text')
+    //     .actions
+    //         .ui.cancel.basic.button
+    //             // i.ban.icon
+    //             | No Thanks
+    //         .ui.teal.approve.labeled.icon.button 
+    //             i.send.icon
+    //             |Send
+    // #message_sent.ui.small.modal
+    //     i.close.icon
+    //     .header Message sent to #{author.profile.first_name}.
+    //     .actions
+    //         .ui.green.approve.button 
+    //             i.check.icon
+    //             |Cool
+
+template(name='reflect_button')
+    if currentUser
+        #reflect.ui.circular.basic.icon.button(data-tooltip='Reflect in Journal')
+            +icon48 name='mirror' classes='ui mini inline image'
+    else
+        .ui.circular.basic.disabled.icon.button(data-tooltip='Reflect in Journal')
+            +icon48 name='mirror' classes='ui mini inline image'
+
+template(name='big_both_voter')
+    i.thumbs.up.link.huge.icon.vote_up(class=vote_up_button_class)
+    i.thumbs.down.link.huge.icon.vote_down(class=vote_down_button_class)
+    // |#{points}
+
+template(name='rating')
+    .ui.massive.heart.rating(data-rating=question_rating)
+
+
+template(name='rank')
+    .ui.tiny.statistic
+        .value #{rank_doc}
+        .label Rank
+    #increase_index.ui.icon.basic.circular.button
+        +icon48 name="chevron-up" classes='ui mini inline image'
+    // #decrease_index.ui.icon.basic.circular.button
+    //     i.chevron.down.icon
+
+
+
+
+
+template(name='toggle_friend')
+    if currentUser
+        if is_friend
+            #remove_friend.ui.basic.button
+                +icon48 name="minus" classes='ui mini inline image'
+                |Unfriend
+        else
+            #add_friend.ui.basic.button
+                +icon48 name="plus" classes='ui mini inline image'
+                |Friend
+
+
+
+template(name='session_edit_button')
+    if currentUser
+        unless is_editing
+            .edit_this.ui.basic.icon.circular.button(title="Edit #{tags}" class=button_classes)
+                +icon48 name="edit" classes='ui mini inline image'
+                // i.icon
+                // |Edit
+        else
+            .ui.center.aligned.basic.segment
+                .save_doc.ui.basic.circular.large.icon.button(class=button_classes)
+                    +icon48 name="checkmark" classes='ui mini inline image'
+                +delete_button
+
+                
+template(name='session_edit_icon')
+    if currentUser
+        unless is_editing
+            i.red.pencil.link.icon.edit_this(title=tags class=button_classes)
+        else
+            .save_doc.ui.green.button(class=button_classes)
+                // |Save
+template(name='edit_button')
+    if currentUser
+        unless editing
+            .edit_this.ui.basic.button(data-tooltip=tags)
+                i.icon
+                    +icon24 name='edit' classes='ui mini inline image'
+                |Edit
+        else
+            .save_doc.ui.green.button
+                i.icon
+                    +icon24 name='checkmark' classes='ui mini inline image'
+                |Save
+                
+template(name='edit_icon')
+    if currentUser
+        unless editing
+            i.edit_this.large.pencil.link.icon(data-tooltip=tags)
+        else
+            .save_doc.ui.icon.green.button
+                i.check.icon
+
+template(name='edit_link')
+    if currentUser
+        unless editing
+            a.edit_this Edit
+        else
+            .save_doc.ui.basic.large.button
+                +icon24 name='checked' classes='ui mini inline image'
+                |Save
+
+template(name='add_to_cart')
+    if can_add
+        unless added
+            #add_to_cart.ui.fluid.teal.button
+                i.large.icons
+                    i.add.to.cart.icon
+                    i.corner.green.plus.icon
+                |Add to Cart
+        else
+            .ui.fluid.labeled.basic.button
+                #remove_from_cart.ui.basic.teal.button
+                    i.large.icons
+                        i.add.to.cart.icon
+                        i.corner.red.minus.icon
+                    |Remove from Cart
+                a.ui.basic.right.pointing.label(href='/cart')
+                    |View Cart
+    else        
+            .ui.fluid.disabled.button
+                i.large.icons
+                    i.add.to.cart.icon
+                    i.corner.green.plus.icon
+                | Not Enough Karma
+
+template(name='delete_button')
+    unless confirming
+        .delete.ui.basic.icon.circular.button
+            i.red.remove.icon
+    else
+        .ui.basic.circular.button.cancel Cancel
+        .ui.red.circular.button.confirm Confirm Delete
+        
+template(name='delete_link')
+    unless confirming
+        a.delete Delete
+    else
+        a.cancel 
+            i.ban.icon
+            |Cancel
+        a.confirm 
+            i.red.trash.icon
+            |Confirm Delete
+        
+
+template(name='published')
+    // .ui.dividing.header Visibility
+        .ui.large.blue.label
+            +icon48 name='eye' classes='ui mini inline image'
+        if can_edit
+        .ui.large.blue.label(data-tooltip="Viewable but not attributed")
+            +icon48 name='ignore' classes='ui mini inline image'
+    div
+        if can_edit
+            #publish.ui.icon.compact.button(data-tooltip='Publish' class=published_class)
+                +icon48 name='eye' classes='ui mini inline image'
+                if is_published
+                    | Published
+            #publish_anonymously.ui.icon.compact.button(data-tooltip='Publish Anonymously' class=published_anonymously_class)
+                +icon48 name='ignore' classes='ui mini inline image'
+                if published_anonymously
+                    |Anonymous
+            #unpublish.ui.icon.compact.button(data-tooltip='Unpublish' class=private_class)
+                +icon48 name='invisible' classes='ui mini inline image'
+                if is_private
+                    | Private
+        // .ui.large.basic.label
+        //     +icon48 name='invisible' classes='ui mini inline image'
+        // if can_edit
+
+
+
+
+
+
+template(name='favorite_button')
+    .ui.basic.icon.button.favorite_item(class=favorite_item_class)
+        +icon24 name='heart' classes=''
+        if favorite_count
+            | #{favorite_count}
+
+template(name='mark_complete_button')
+    .mark_complete.ui.circular.icon.button(class=complete_button_class) 
+        if completed
+            +icon48 name='checkmark' classes='ui mini inline image'
+            // | Completed
+        else
+            +icon48 name='unchecked-checkbox' classes='ui mini inline image'
+            // | Mark Complete
+        
+template(name='mark_doc_complete_button')
+    .mark_complete.ui.circular.icon.basic.button(class=complete_button_class) 
+        if complete
+            +icon48 name='checkmark' classes='ui mini inline image'
+            // | Completed
+        else
+            +icon48 name='unchecked-checkbox' classes='ui mini inline image'
+            // | Complete
+        
+template(name='mark_doc_approved_button')
+    if approved
+        .unapprove.ui.circular.icon.basic.button(data-tooltip='Unapprove')
+            +ultraviolet_icon40 name='approval' classes='ui mini inline image'
+    else
+        .approve.ui.circular.icon.basic.button(data-tooltip='Approve')
+            +icon48 name='approval' classes='ui mini inline image'
+         
+template(name='bookmark_button')
+    .bookmark_button.ui.circular.icon.button(class=bookmark_button_class data-tooltip='Bookmark') 
+        +icon48 name='bookmark' classes='ui mini inline image'
+        // if bookmarked
+        //     | Bookmarked
+        // else
+        //     | Bookmark
+        
+        
+template(name='pin_button')
+    .pin_button.ui.circular.icon.button(class=pin_button_class data-tooltip='Pin this') 
+        if pinned
+            +icon24 name="push-pin" classes='ui mini inline image'
+            // | Pinned
+        else
+            +icon24 name="push-pin" classes='ui mini inline image'
+            // | Pin
+        
+        
+template(name='pin_corner_button')
+    a.pin_button.ui.top.right.attached.button(class=pin_button_class data-tooltip='Pin this') 
+        +icon48 name="push-pin" classes='ui mini inline image'
+        
+template(name='view_full_button')
+    a.ui.basic.circular.icon.button(href="/view/#{_id}" class=classes data-tooltip='View Full')
+        +icon48 name="double-right" classes='ui mini inline image'
+
+
+template(name='toggle_editing_button')
+    if can_edit
+        if editing
+            #toggle_off_editing.ui.basic.circular.button(data-position='bottom center' data-tooltip='Save')
+                +icon48 name='checkmark' classes='ui mini inline image'
+        else
+            #toggle_editing.ui.basic.circular.button(data-position="bottom center" data-tooltip='Edit')
+                +icon48 name='edit' classes='ui mini inline image'
+            // if tags
+            // else
+                // .ui.fluid.basic.disabled.circular.button Add Tags to Save
+
+
+
+template(name='add_doc_button')
+    #add_doc.ui.basic.circular.fluid.button
+        +icon48 name='plus' classes='ui mini inline image'
+        | #{add_button_text}
+
+
+template(name='subscribe_button')
+    if is_participant
+        #subscribe_button.ui.button(class=subscribe_buton_class)
+            if subscribed
+                +icon48 name='checked' classes='ui mini inline image'
+                | Subscribed
+            else
+                +icon48 name='unchecked-checkbox' classes='ui mini inline image'
+                |Not Subscribed
+                
+                
+template(name='toggle_zen_mode_button')
+    if zen_mode
+        a#turn_off_zen_mode(href="#")
+            +icon48 name='lotus' title="Turn off Zen Mode" classes='ui centered link image'
+            // |Zen
+    else
+        a#turn_on_zen_mode(href='#')
+            .ui.link.image
+                img(src="https://png.icons8.com/lotus/ios7/32" title="Turn on Zen Mode" width="32" height="32")
+            // |Zen
+        
+        
+template(name='view_tags_button')
+    .ui.circular.basic.button(data-tooltip=tags)
+        +icon48 name='hashtag' classes='ui inline image'

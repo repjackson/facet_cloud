@@ -26,6 +26,7 @@ head
 
 
 template(name='layout')
+    +status
     +nav
     +Template.dynamic template=sub_nav
     +Template.dynamic template=cloud
@@ -35,7 +36,43 @@ template(name='layout')
 
 
 
+template(name="tag_result")
+    .ui.basic.label #{name}
 
-                    
-template(name='tag_result')
-    .ui.small.compact.button #{name}
+template(name='not_found')
+    .ui.text.container
+        .ui.center.aligned.header Not Found
+        
+        
+template(name='staus_indicator')
+    if online 
+        // .ui.label(class='{{labelClass}}') 
+        img.ui.avatar.image(src="https://png.icons8.com/connection-status-on/color/48" data-tooltip='Online' width="48" height="48")
+        // |Online
+    else if idle
+        .ui.label(class='{{labelClass}}') Idle
+        // else 
+        //     |Offline
+
+
+template(name='user_list_item')
+    .item
+        img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+        .content
+            .header
+                |#{name}
+            .description
+                +tiny_color_dots
+                each five_tags
+                    .ui.basic.label #{this}
+
+
+template(name='user_pill')
+    .item
+        .content
+            .header
+                img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+                |#{name}
+            .description
+                each five_tags
+                    .ui.basic.small.label #{this}

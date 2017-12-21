@@ -1,6 +1,6 @@
 {
   "definitions": {
-    "accordion": false,
+    "accordion": true,
     "ad": false,
     "api": false,
     "breadcrumb": false,
@@ -13,7 +13,7 @@
     "dimmer": true,
     "divider": true,
     "dropdown": true,
-    "embed": false,
+    "embed": true,
     "feed": false,
     "flag": false,
     "form": true,
@@ -30,7 +30,7 @@
     "message": true,
     "modal": true,
     "nag": false,
-    "popup": false,
+    "popup": true,
     "progress": false,
     "rail": false,
     "rating": false,

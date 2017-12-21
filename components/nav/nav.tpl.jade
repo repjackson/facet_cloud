@@ -1,34 +1,43 @@
 .ui.stackable.borderless.inverted.menu
-    .ui.container
-        a.ui.header.item(href='/' class="{{isActivePath '/'}}") 
-            .facet_black
-                |FC
-        // a.item(href='/services' class="{{isActivePath '/services'}}") Services
-        // a.item(href='/events' class="{{isActivePath '/events'}}") Event Demo
-        a.item(href='/posts' class="{{isActivePath '/posts'}}") Blog
-        a.item(href='/sites' class="{{isActivePath '/sites'}}") Sites
-        // a.item(href='/demo' class="{{isActivePath '/demo'}}") UI Demo
-        // a.item(href='/contact' class="{{isActivePath '/contact'}}") Contact
-        .right.menu 
-            a.icon.item(href='/admin/content' class="{{isActivePath '/admin/'}}")
-                i.configure.large.icon
-                // | Admin
-            a.icon.item(href='/messages' class="{{isActivePath '/messages'}}")
-                i.mail.large.icon
-            if currentUser
-                a.icon.item(href="/account/profile/edit" class="{{isActivePath '/account/profile/edit'}}")
-                    if currentUser.image_id
-                        img.ui.avatar.image(src="{{c.url currentUser.image_id width=50 height=50 gravity='face' crop='fill'}}")
-                    else
-                        i.user.large.icon
-                    // if currentUser.name
-                    //     | #{currentUser.name}
-                    // else
-                        // | Profile
-                a#logout.ui.icon.item(href='#') 
-                    i.sign.out.large.icon
-                    // |Sign Out
-            else
-                a.ui.icon.item(href='/sign-in') 
-                    i.sign.in.large.icon
-                    // |Sign In
+    a.ui.header.item(href='/' class="{{isActivePath '/'}}") 
+        .facet_black
+            |F
+    // a.item(href='/services' class="{{isActivePath '/services'}}") Services
+    // a.item(href='/events' class="{{isActivePath '/events'}}") Event Demo
+    a.icon.item(href='/posts' class="{{isActivePath '/posts'}}") 
+        i.large.book.icon
+    a.icon.item(href='/sites' class="{{isActivePath '/sites'}}")
+        i.large.clone.icon
+    if isInRole 'admin'
+        a#toggle_admin_mode.item(href='#' data-position="bottom center" data-content="Toggle Admin Mode") 
+            .ui.image
+                if admin_mode
+                    +icon48 name='user-shield' classes='ui image'
+                else
+                    +dots50 name='user-shield' classes='ui image'
+        
+    // a.item(href='/demo' class="{{isActivePath '/demo'}}") UI Demo
+    // a.item(href='/contact' class="{{isActivePath '/contact'}}") Contact
+    .right.menu 
+        a.icon.item(href='/admin/content' class="{{isActivePath '/admin/'}}")
+            i.configure.large.icon
+            // | Admin
+        a.icon.item(href='/messages' class="{{isActivePath '/messages'}}")
+            i.mail.large.icon
+        if currentUser
+            a.icon.item(href="/account/profile/edit" class="{{isActivePath '/account/profile/edit'}}")
+                if currentUser.image_id
+                    img.ui.avatar.image(src="{{c.url currentUser.image_id width=50 height=50 gravity='face' crop='fill'}}")
+                else
+                    i.user.large.icon
+                // if currentUser.name
+                //     | #{currentUser.name}
+                // else
+                    // | Profile
+            a#logout.ui.icon.item(href='#') 
+                i.sign.out.large.icon
+                // |Sign Out
+        else
+            a.ui.icon.item(href='/sign-in') 
+                i.sign.in.large.icon
+                // |Sign In

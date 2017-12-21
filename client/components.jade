@@ -1,0 +1,276 @@
+template(name='resonate_button')
+    .resonate_button.ui.circular.icon.button(class=resonate_button_class data-tooltip='This Resonates with Me')
+        // i.big.red.heartbeat.icon
+        // <img src="https://png.icons8.com/heart-with-pulse/dusk/64" title="Heart with Pulse" width="64" height="64">        
+        img.ui.mini.inline.image(src="https://png.icons8.com/heart-with-pulse/dusk/64" width="64" height="64")
+        
+
+template(name='resonates_list')
+    if resonates_with_people.count
+        .ui.segment
+            .ui.dividing.header
+                |This Resonates With... (#{resonates_with_people.count})
+            .ui.divided.list
+                each resonates_with_people
+                    .item
+                        img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+                        .content
+                            .header
+                                |#{name}
+                            .description
+                                +tiny_color_dots
+                                // each five_tags
+                                //     .ui.basic.label #{this}
+
+
+template(name='mark_read')
+    // if read
+    //     .mark_unread.ui.basic.button 
+    //         +icon48 name='read-message' classes='avatar'
+    //         |Mark Unread
+    // else
+    if currentUser
+        unless read
+            .mark_read.ui.basic.circular.icon.button(data-tooltip='Mark Read')
+                +icon48 name='message' classes='ui mini inline image'
+
+template(name='read_by_list')
+    // if read_by.count
+    .ui.segment
+        .ui.dividing.header
+            |Read by... 
+            span.floated.right (#{read_by.count})
+        .ui.divided.list
+            each read_by
+                .item
+                    img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+                    .content
+                        .header
+                            |#{name}
+                        .description
+                            +tiny_color_dots
+                            // each five_tags
+                            //     .ui.basic.label #{this}
+
+template(name='bookmarked_by_list')
+    // if read_by.count
+    .ui.segment
+        .ui.dividing.header
+            |Bookmarked by... 
+            span.floated.right (#{bookmarked_by.count})
+        .ui.divided.list
+            each bookmarked_by
+                .item
+                    img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+                    .content
+                        .header
+                            |#{name}
+                        .description
+                            +tiny_color_dots
+                            // each five_tags
+                            //     .ui.basic.label #{this}
+
+
+template(name='doc_matches')
+    .ui.fluid.styled.accordion
+        .title 
+            +icon48 name='query-inner-join' classes='avatar'
+            |Top Doc Matches (#{top_doc_matches.length})
+            i.dropdown.icon
+            if currentUser
+                #compute_doc_matches.ui.icon.basic.button(data-tooltip='Compute Matches')
+                    i.refresh.icon
+        .content.match_content
+            if top_doc_matches
+                .ui.relaxed.divided.items
+                    each top_doc_matches
+                        +doc_match
+                        
+                        
+                                        
+template(name='doc_match')                    
+    .item 
+        .content
+            .description
+                +icon48 name='query-outer-join' classes='avatar'
+                |Intersection Tags (#{intersection_tags_count})
+                each intersection_tags
+                    .ui.basic.label #{this}
+            .description
+                +icon48 name='tags' classes='avatar'
+                | Document Tags
+                each tags
+                    .ui.small.basic.label #{this}
+            // .description
+            //     |#{match_doc.type} entry by
+            //     img.ui.avatar.image(src="{{c.url match_doc.author.profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+            //     | #{match_doc.author.name}
+            .title
+                i.dropdown.icon
+                |Content 
+            .content
+                |!{match_doc.content}
+            .extra
+                +view_full_button match_doc
+                
+                
+template(name='service_buttons')
+    .ui.dividing.header Services
+    +request_tori_feedback
+    +call_watson
+                        
+                        
+template(name='parent_doc_segment')
+    if parent_id
+        .ui.styled.fluid.accordion
+            .title
+                +icon48 name='response' classes='avatar'
+                |In response to...
+                i.dropdown.icon
+            .content
+                with parent
+                    |!{content}
+                    +view_full_button
+                    // .ui.horizontal.divided.list
+                    //     .item
+                    //         img.ui.avatar.image(src="{{c.url author.profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+                    //         |by #{author.name}
+                    //     .item
+                    //         |Type:
+                    //         .ui.basic.label #{type}
+                    // .ui.divider
+                    // img.ui.avatar.image(src="https://png.icons8.com/tags/color/48" width="48" height="48")
+                    // each tags
+                    //     .ui.basic.small.label #{this}
+                    
+
+
+template(name='view_published_toggle')
+    if viewing_mine
+        #view_all_entries.ui.basic.fluid.button
+            img.ui.avatar.image(src="{{c.url currentUser.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
+            |Viewing Mine (Public and Private)
+    if viewing_all
+        #view_my_entries.ui.basic.fluid.button 
+            +icon48 name='people' classes='avatar'
+            |Viewing All Public
+
+template(name='view_read_toggle')
+    if viewing_unread
+        #view_all.ui.basic.fluid.button
+            +icon48 name='read-message' classes='avatar'
+            |Viewiing Unread
+    if viewing_all
+        #view_unread.ui.basic.fluid.button 
+            +icon48 name='message' classes='avatar'
+            |Viewing Read and Unread
+
+template(name='stripe_cc_form')
+    #card_element
+    
+template(name='icon48')
+    img.ui.image(src="https://png.icons8.com/#{name}/color/48" width="48" height="48" class=classes title=tooltip)
+template(name='icon24')
+    img(src="https://png.icons8.com/#{name}/color/24" width="24" height="24" class=classes title=tooltip)
+template(name='icon96')
+    // i.icon(src="https://png.icons8.com/#{name}/color/96" width="96" height="96" class=classes title=tooltip)
+    img(src="https://png.icons8.com/#{name}/color/96" width="96" height="96" class=classes title=tooltip)
+
+template(name='ultraviolet_icon40')
+    img(src="https://png.icons8.com/#{name}/ultraviolet/40" class=classes title=tooltip width="40" height="40")
+    
+template(name='ultraviolet_icon80')
+    img(src="https://png.icons8.com/#{name}/ultraviolet/80" class=classes title=tooltip width="80" height="80")
+    
+template(name='dots100')
+    img(src="https://png.icons8.com/hide/#{name}/100/000000" class=classes title=tooltip)
+    
+template(name='dots50')
+    img(src="https://png.icons8.com/hide/#{name}/50/000000" class=classes title=tooltip)
+    
+    
+template(name='dusk_icon64')    
+    img(src="https://png.icons8.com/#{name}/dusk/64" class=classes title=tooltip width="64" height="64")    
+    
+template(name='ios96')
+    // i.icon(src="https://png.icons8.com/#{name}/p1em/96" class=classes width="96" height="96")
+    img(src="https://png.icons8.com/#{name}/p1em/96" class=classes width="96" height="96")
+
+template(name='published_status')
+    if published
+        .ui.basic.blue.large.label
+            +icon48 name='eye' classes='ui inline tiny image'
+            |Published
+    else
+        .ui.basic.large.label
+            +icon48 name='invisible' classes='ui inline tiny image'
+            | Not Published
+            
+            
+template(name='save_button')
+    if tags
+        #toggle_off_editing.ui.fluid.basic.circular.button(data-position='bottom center' data-tooltip='Save')
+            +icon48 name='checkmark' classes='ui mini inline image'
+    else
+        .ui.fluid.basic.disabled.circular.button Add Tags to Save
+
+
+template(name='author_info')
+    if is_anonymous
+        |by Anonymous
+    else
+        | by 
+        if is_author
+            | you
+        else
+            with author
+                if profile.image_id
+                    img.ui.avatar.spaced.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+                |&nbsp;
+                a(href="/profile/#{username}") #{name} 
+                +staus_indicator
+    // .ui.sub.header #{when}
+
+template(name='recipient_info')
+    .ui.header requested of 
+        img.ui.avatar.image(src="{{c.url recipient.profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+        |#{recipient.name}
+        with recipient
+            +staus_indicator
+
+
+
+
+template(name='doc_stats_module')
+    .ui.dividing.header 
+        +icon48 name='combo-chart'
+        | Stats
+    if child_count
+        .ui.header Response Count: #{child_count}
+
+
+template(name='button_link')
+    a.ui.basic.circular.button(href=url)
+        +icon48 name=icon classes='ui mini spaced image'
+        | #{label}
+        
+template(name='dividing_header')
+    .ui.dividing.header 
+        +icon48 name=icon classes='ui mini inline image'
+        | #{label}
+        
+template(name='page_header')
+    h1.ui.center.aligned.header
+        +icon96 name=icon
+        | #{label}
+
+template(name='published_label')
+    if is_published
+        .ui.basic.label(data-tooltip='Published')
+            +icon48 name='eye'
+    if is_anonymous
+        .ui.basic.label(data-tooltip='Published')
+            +icon48 name='ignore'
+    if is_private
+        .ui.basic.label(data-tooltip='Private')
+            +icon48 name='invisible'
