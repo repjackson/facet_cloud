@@ -416,3 +416,11 @@ template(name='transcript')
                 // +doc_by_parentid_and_type parent_id=_id type='transcript'
                 // +doc_content tags='sol,welcome,transcript'
     .ui.hidden.divider
+    
+    
+template(name='imdb')
+    if editing
+        .ui.labeled.input
+            .ui.basic.label 
+                |IMDB Id
+            input#imdb(type='text' value=imdb)

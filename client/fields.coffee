@@ -775,3 +775,12 @@ Template.transcript.onRendered ->
                 $('.ui.accordion').accordion()
             , 1000
             
+            
+Template.imdb.events
+    'blur #imdb': (e,t)->
+        imdb = $(e.currentTarget).closest('#imdb').val()
+        Docs.update @_id,
+            $set: imdb: imdb
+        Meteor.call 'import_imdb', imdb, @_id
+            
+            

@@ -34,23 +34,23 @@ Docs.allow
 
 
 
-Meteor.publish 'docs', (selected_tags)->
+# Meteor.publish 'docs', (selected_tags)->
 
-    self = @
-    match = {}
-    # if selected_tags.length > 0 then match.tags = $all: selected_tags
-    match.tags = $all: selected_tags
+#     self = @
+#     match = {}
+#     # if selected_tags.length > 0 then match.tags = $all: selected_tags
+#     match.tags = $all: selected_tags
     
-    # match.group_id = 'CiD3esYNw4oRdL5PW'
+#     # match.group_id = 'CiD3esYNw4oRdL5PW'
     
-    # if filter then match.type = filter
+#     # if filter then match.type = filter
 
-    Docs.find match,
-        limit: 5
+#     Docs.find match,
+#         limit: 5
         
 
-Meteor.publish 'doc', (id)->
-    Docs.find id
+# Meteor.publish 'doc', (id)->
+#     Docs.find id
     
     
     
