@@ -11,7 +11,7 @@ template(name='grid_item')
                 +session_edit_button
                 // +delete_button
     else
-        .ui.center.aligned.card(class=card_class)
+        .ui.card(class=card_class)
             if is_admin
                 .ui.top.left.attached.basic.label
                     i.unlock.alternate.icon
@@ -19,7 +19,7 @@ template(name='grid_item')
                 .ui.top.right.attached.basic.label
                     i.checkmark.icon
                     |#{completion_type}
-            .content
+            .ui.center.aligned.content
                 if can_access
                     a.ui.image(href="/view/#{_id}")
                         if image_url
@@ -37,6 +37,7 @@ template(name='grid_item')
                             if number
                                 |#{number}: 
                         |#{title}
+                        // .ui.header hi thre
                 else
                     .ui.image
                         if image_url

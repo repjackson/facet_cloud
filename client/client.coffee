@@ -47,8 +47,8 @@ Template.registerHelper 'editing', () ->
     Session.get('editing') or Session.equals('editing_id', @_id)
 
 
-# Template.registerHelper 'is_admin', () ->  
-#     Roles.userIsInRole(Meteor.userId(), 'admin') and Session.equals 'admin_mode', true
+Template.registerHelper 'is_admin', () ->  
+    Roles.userIsInRole(Meteor.userId(), 'admin') and Session.equals 'admin_mode', true
 
 Template.registerHelper 'publish_when', () -> moment(@publish_date).fromNow()
 

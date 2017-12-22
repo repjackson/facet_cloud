@@ -1,0 +1,39 @@
+template(name='view_tags')
+    if intention_tags
+        .meta
+            +icon48 name='spotlight' classes='ui mini inline image' title='Intention Tags'
+            each intention_tags
+                .ui.circular.small.compact.button.intention_tag(class=intention_tag_class) 
+                    // +icon24 name='spotlight'
+                    strong #{this}
+    if location_tags
+        .meta
+            +icon48 name='sofa' classes='ui mini inline image' title='Location Tags'
+            each location_tags
+                .ui.circular.small.compact.button.location_tag(class=location_tag_class)
+                    // +icon24 name='geo-fence' title='Location Tags'
+                    strong #{this}
+    .meta
+        +icon48 name='hashtag' classes='ui mini inline image' title='Theme Tags'
+        each tags
+            .ui.circular.small.compact.button.theme_tag(class=theme_tag_class)
+                // +icon24 name='hashtag' classes='ui mini inline image'
+                strong #{this}
+
+
+template(name='view_tags_sidebar')
+    .ui.header 
+        +icon48 name='hashtag'
+        |Theme
+    each tags
+        .ui.basic.large.label.doc_tag #{this}
+    .ui.header 
+        +icon48 name='sofa'
+        |Location Tags
+    each location_tags
+        .ui.basic.large.label.location_tag #{this}
+    .ui.header 
+        +icon48 name='spotlight'
+        |Intention Tags
+    each intention_tags
+        .ui.basic.large.label.intention_tag #{this}

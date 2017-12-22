@@ -1,23 +1,18 @@
 .ui.stackable.borderless.inverted.menu
-    a.ui.header.item(href='/' class="{{isActivePath '/'}}") 
+    a.ui.header.item(href='/view/rzpRYuGK2Rwh2Cv9w' class="{{isActivePath '/view/rzpRYuGK2Rwh2Cv9w'}}") 
         .facet_black
             |F
-    // a.item(href='/services' class="{{isActivePath '/services'}}") Services
-    // a.item(href='/events' class="{{isActivePath '/events'}}") Event Demo
-    a.icon.item(href='/posts' class="{{isActivePath '/posts'}}") 
-        i.large.book.icon
-    a.icon.item(href='/sites' class="{{isActivePath '/sites'}}")
+    a.icon.item(href='/view/2knFbcAMjaCjPFuri' class="{{isActivePath '/view/2knFbcAMjaCjPFuri'}}") 
         i.large.clone.icon
+    a.icon.item(href='/view/ByvrQiuSQNCiDwddH' class="{{isActivePath '/view/ByvrQiuSQNCiDwddH'}}") 
+        i.large.users.icon
     if isInRole 'admin'
-        a#toggle_admin_mode.item(href='#' data-position="bottom center" data-content="Toggle Admin Mode") 
-            .ui.image
-                if admin_mode
-                    +icon48 name='user-shield' classes='ui image'
-                else
-                    +dots50 name='user-shield' classes='ui image'
+        a#toggle_admin_mode.icon.item(href='#' data-position="bottom center" data-content="Toggle Admin Mode") 
+            if admin_mode
+                i.blue.protect.large.icon
+            else
+                i.protect.large.icon
         
-    // a.item(href='/demo' class="{{isActivePath '/demo'}}") UI Demo
-    // a.item(href='/contact' class="{{isActivePath '/contact'}}") Contact
     .right.menu 
         a.icon.item(href='/admin/content' class="{{isActivePath '/admin/'}}")
             i.configure.large.icon

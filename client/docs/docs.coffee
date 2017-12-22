@@ -29,7 +29,7 @@ Template.view_doc.onCreated ->
             tag_limit = 20
             doc_limit = 20
             view_published = 
-                if Session.equals('admin_mode', true) then true else Session.get('view_published')
+                if Session.equals('admin_mode', true) then null else Session.get('view_published')
             view_read = null
             view_bookmarked = null
             view_resonates = null
@@ -40,8 +40,7 @@ Template.view_doc.onCreated ->
             )
 
 Template.view_doc.helpers
-    doc: -> 
-        Docs.findOne FlowRouter.getParam('doc_id')
+    doc: -> Docs.findOne FlowRouter.getParam('doc_id')
 
 
     younger_sibling: ->
@@ -117,12 +116,12 @@ Template.view_doc.helpers
             'eight wide column' 
         else if @child_view is 'nav' and !@theme_tags_facet
             'fourteen wide column'
+        else if @child_view is 'nav' and !@view_published_filter or !@can_change_view_mode
+            'twelve wide column'
         else
             'eight wide column'
         # else if @theme_tags_facet or @location_tags_facet or @intention_tags_facet or @username_facet
         #     'eight wide column'
-        # else
-        #     'fourteen wide column'
     field_segment_class: -> if Session.equals 'editing', true then '' else 'basic compact'
     
     
@@ -172,6 +171,16 @@ Template.view_doc.helpers
     
     is_editing_session_id: -> Session.get 'editing_session_id'
 
+
+    show_right_sidebar: ->
+        # if !Session.get('editing') or !Session.get('editing_id') or !Session.get('admin_mode') or @view_published_filter or @can_change_view_mode 
+        if @view_published_filter or @can_change_view_mode 
+            console.log 'show right sidebar'
+            true
+        else 
+            console.log 'dont show right sidebar'
+            false
+            
     
 Template.doc_editing_sidebar.helpers
     toggle_theme_tags_class: -> if @theme_tags_facet is true then 'blue' else 'basic'

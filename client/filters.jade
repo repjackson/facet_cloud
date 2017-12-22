@@ -1,0 +1,80 @@
+template(name='complete_filter')
+    .ui.buttons
+        #view_complete.ui.button(class=view_complete_class data-tooltip='View Only Complete') 
+            +icon48 name='checked' classes='ui mini image'
+        #view_incomplete.ui.button(class=view_incomplete_class data-tooltip='View Only Incomplete')
+            +icon48 name='unchecked_checkmark' classes='ui mini image'
+            
+template(name='approved_filter')
+    .ui.buttons
+        #view_approved.ui.button(class=view_approved_class data-tooltip='View Only Approved') 
+            +icon48 name='approval' classes='ui mini inline image'
+        #view_unapproved.ui.button(class=view_unapproved_class data-tooltip='View Only Unapproved')
+            +ultraviolet_icon40 name='approval' classes='ui mini inline image'
+            
+template(name='published_filter')
+    .ui.buttons
+        #view_published.ui.button(class=view_published_class data-tooltip='View Only Published') 
+            +icon48 name='eye' classes='ui mini image'
+        #view_private.ui.button(class=view_private_class data-tooltip='View Only Private')
+            +icon48 name='invisible' classes='ui mini image'
+            
+            
+template(name='read_filter')
+    .ui.buttons
+        #view_read.ui.button(class=view_read_class data-tooltip='View Only Read') 
+            +icon48 name='read_message' classes='ui mini image'
+        #view_unread.ui.button(class=view_unread_class data-tooltip='View Only Unread')
+            +icon48 name='message' classes='ui mini image'
+            
+template(name='bookmark_filter')
+    .ui.buttons
+        #view_bookmarked.ui.button(class=view_bookmarked_class data-tooltip='View Only Bookmarked') 
+            +icon48 name='bookmark-ribbon' classes='ui mini image'
+        #view_unbookmarked.ui.button(class=view_unbookmarked_class data-tooltip='View Only Unbookmarked')
+            +ultraviolet_icon40 name='bookmark_ribbon' classes='ui mini image'
+            
+template(name='resonates_filter')
+    .ui.buttons
+        #view_resonates.ui.button(class=view_resonates_class data-tooltip='View Only Resonates') 
+            +dusk_icon64 name='heart-with-pulse' classes='ui mini image'
+        #view_non_resonates.ui.button(class=view_non_resonates_class data-tooltip='View Only Non-Resonates')
+            +icon48 name='unavailable' classes='ui mini image'
+
+
+
+// lightbank components
+
+template(name='image_filter')
+    #view_images.ui.button(class=view_images_class data-tooltip='Images') 
+        +icon48 name='picture' classes='ui mini image'
+
+
+// lightbank types
+            
+template(name='passage_filter')
+    #view_passages.ui.circular.button(class=view_passages_class data-tooltip='Passages') 
+        +icon48 name='align-left' classes='ui mini image'
+            
+template(name='quote_filter')
+    #view_quotes.ui.circular.button(class=view_quotes_class data-tooltip='Quotes') 
+        +icon48 name='get-quote' classes='ui mini image'
+            
+template(name='journal_prompt_filter')
+    #view_journal_prompts.ui.circular.button(class=view_journal_prompts_class data-tooltip='Journal Prompts') 
+        +icon48 name='ask-question' classes='ui mini image'
+            
+template(name='poem_filter')
+    #view_poems.ui.circular.button(class=view_poems_class data-tooltip='Poems') 
+        +icon48 name='close-up' classes='ui mini image'
+            
+template(name='doc_limit')
+    .ui.header Result Limit
+    #make_1.ui.large.button(class=limit_1_class data-tooltip='View 1 Result') 
+        strong 1
+    #make_5.ui.large.button(class=limit_5_class data-tooltip='View 5 Results') 
+        strong 5
+    #make_10.ui.large.button(class=limit_10_class data-tooltip='View 10 Results') 
+        strong 10
+    // #make_20.ui.large.button(class=limit_20_class data-tooltip='View 20 Results')
+    //     strong  20

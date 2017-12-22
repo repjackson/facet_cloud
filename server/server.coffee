@@ -18,6 +18,13 @@ Meteor.users.allow
         u and 'admin' in u.roles
 
 
+Cloudinary.config
+    cloud_name: 'facet'
+    api_key: Meteor.settings.cloudinary_key
+    api_secret: Meteor.settings.cloudinary_secret
+
+
+
 
 Docs.allow
     insert: (userId, doc) -> doc.author_id is userId
@@ -27,16 +34,16 @@ Docs.allow
 
 
 
-Meteor.publish 'docs', (selected_tags, filter)->
+Meteor.publish 'docs', (selected_tags)->
 
     self = @
     match = {}
     # if selected_tags.length > 0 then match.tags = $all: selected_tags
     match.tags = $all: selected_tags
     
-    match.group_id = 'CiD3esYNw4oRdL5PW'
+    # match.group_id = 'CiD3esYNw4oRdL5PW'
     
-    if filter then match.type = filter
+    # if filter then match.type = filter
 
     Docs.find match,
         limit: 5
@@ -47,12 +54,11 @@ Meteor.publish 'doc', (id)->
     
     
     
-Meteor.publish 'tags', (selected_tags, filter)->
+Meteor.publish 'tags', (selected_tags)->
     self = @
     match = {}
-    match.group_id = 'CiD3esYNw4oRdL5PW'
+    # match.group_id = 'CiD3esYNw4oRdL5PW'
     if selected_tags.length > 0 then match.tags = $all: selected_tags
-    if filter then match.type = filter
 
     cloud = Docs.aggregate [
         { $match: match }

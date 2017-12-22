@@ -73,8 +73,9 @@ template(name='view_doc')
                                             +icon48 name=older_sibling.icon_class classes='ui mini spaced image'
                                         else
                                             +dots100 name=older_sibling.icon_class classes='ui mini spaced image'
-                        else if is_author
-                            #add_older_sibling.ui.basic.button Add Older Sibling
+                        else if number 
+                            if is_author
+                                #add_older_sibling.ui.basic.button Add Older Sibling
             .centered.row
                 unless is_editing_something
                     .center.aligned.four.wide.column
@@ -173,7 +174,8 @@ template(name='view_doc')
                     .six.wide.column
                         +doc_editing_sidebar
                 else
-                    unless is_editing_something
+                    // unless is_editing_something
+                    if show_right_sidebar
                         .three.wide.column
                             if is_admin
                                 if completion_type
