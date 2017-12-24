@@ -203,8 +203,7 @@ FlowRouter.notFound =
 
 
 FlowRouter.route '/', action: ->
-    BlazeLayout.render 'layout', 
-        main: 'home'
+    FlowRouter.go "/view/rzpRYuGK2Rwh2Cv9w"
 
 
 

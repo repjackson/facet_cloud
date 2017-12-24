@@ -1,0 +1,22 @@
+.ui.center.aligned.header 
+    i.heartbeat.icon
+    | #{user.name} Karma
+
+.ui.header 
+    |Total
+    i.heartbeat.icon
+    |#{user.points}
+
+.ui.header Karma Docs
+.ui.cards
+    each karma_docs
+        .card
+            .content
+                if title
+                    .header #{title}
+                each tags
+                    .ui.label #{this}
+            .content
+                i.heartbeat.icon
+                |#{points}
+                +view_full_button

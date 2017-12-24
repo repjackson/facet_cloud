@@ -222,11 +222,25 @@ Meteor.methods
                 console.error err
             else
                 tags = []
-                
+                # console.log res.data.Type
                 actors = res.data.Actors.split ','
                 trimmed_lowered_actors = []
                 for actor in actors
+                    # console.log actor
                     tags.push actor.trim().toLowerCase()
+                # tags.push trimmed_lowered_actors
+                
+                
+                writers = res.data.Writer.split ','
+                trimmed_lowered_writers = []
+                for writer in writers
+                    tags.push writer.trim().toLowerCase()
+                # tags.push trimmed_lowered_actors
+                
+                languages = res.data.Language.split ','
+                trimmed_lowered_languages = []
+                for language in languages
+                    tags.push language.trim().toLowerCase()
                 # tags.push trimmed_lowered_actors
                 
                 
@@ -235,11 +249,13 @@ Meteor.methods
                 for genre in genres
                     tags.push genre.trim().toLowerCase()
                 # tags.push trimmed_lowered_genres
-                tags.push res.data.Type.toLowerCase()
-                tags.push res.data.Production.toLowerCase() 
-                tags.push res.data.Director.toLowerCase() 
-                tags.push res.data.Rated.toLowerCase() 
-                tags.push res.data.Year.toLowerCase()
+                tags.push res.data.Type?.toLowerCase()
+                # tags.push res.data.Production?.toLowerCase() 
+                tags.push res.data.Director?.toLowerCase() 
+                tags.push res.data.Rated?.toLowerCase() 
+                tags.push res.data.Year?.toLowerCase()
+                tags.push res.data.Country?.toLowerCase()
+                tags.push res.data.imdbRating?.toLowerCase()
 
                 
                 Docs.update doc_id,
@@ -250,3 +266,20 @@ Meteor.methods
                         image_url: res.data.Poster
                     $addToSet: 
                         tags: $each: tags
+                        
+                        
+    import_recipe: (recipe_id, doc_id)->
+        console.log doc_id
+        HTTP.call 'get', "https://api.edamam.com/search?r=#{recipe_id}&app_id=19ab4b92&app_key=77074c0869aeb48e9a1842182352d518",(err,res)->
+            if err 
+                console.error err
+            else
+                console.dir res.data[0]
+                Docs.update doc_id,
+                    $set:
+                        title: res.data[0].label
+                        image_url: res.data[0].image
+                        link: res.data[0].url
+                        content: res.data[0].ingredientLines
+                        tags: res.data[0].tags
+                        # response: res.data                        

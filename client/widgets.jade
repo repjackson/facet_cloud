@@ -31,7 +31,7 @@ template(name='mark_read')
     // else
     if currentUser
         unless read
-            .mark_read.ui.basic.circular.icon.button(data-tooltip='Mark Read')
+            .mark_read.ui.icon.button(data-tooltip='Mark Read')
                 +icon48 name='message' classes='ui mini inline image'
 
 template(name='read_by_list')
@@ -209,7 +209,7 @@ template(name='published_status')
             
 template(name='save_button')
     if tags
-        #toggle_off_editing.ui.fluid.basic.circular.button(data-position='bottom center' data-tooltip='Save')
+        #toggle_off_editing.ui.fluid.button(data-position='bottom center' data-tooltip='Save')
             +icon48 name='checkmark' classes='ui mini inline image'
     else
         .ui.fluid.basic.disabled.circular.button Add Tags to Save
@@ -250,7 +250,7 @@ template(name='doc_stats_module')
 
 
 template(name='button_link')
-    a.ui.basic.circular.button(href=url)
+    a.ui.button(href=url)
         +icon48 name=icon classes='ui mini spaced image'
         | #{label}
         

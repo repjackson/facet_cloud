@@ -424,3 +424,11 @@ template(name='imdb')
             .ui.basic.label 
                 |IMDB Id
             input#imdb(type='text' value=imdb)
+
+template(name='recipe')
+    if editing
+        .ui.labeled.fluid.input
+            .ui.basic.label 
+                |Recipe
+            input#recipe(type='text' value=recipe)
+

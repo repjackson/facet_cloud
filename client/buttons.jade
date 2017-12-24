@@ -1,12 +1,12 @@
 template(name='voting')
-    .ui.basic.circular.icon.button
+    .ui.icon.button
         i.thumbs.up.link.big.icon.vote_up(class=vote_up_button_class)
-    .ui.basic.circular.icon.button
+    .ui.icon.button
         i.thumbs.down.link.big.icon.vote_down(class=vote_down_button_class)
         // |#{points}
 
 template(name='thanks_button')
-    .ui.circular.icon.button.vote_up(class=thanks_button_class data-tooltip="Thank #{author.profile.first_name} for Sharing")
+    .ui.icon.button.vote_up(class=thanks_button_class data-tooltip="Thank #{author.profile.first_name} for Sharing")
         +icon24 name='applause' classes='ui mini inline image'
         // img.ui.mini.image(src="https://png.icons8.com/pray-filled/ios7/50" width="50" height="50")
         // if said_thanks
@@ -21,7 +21,7 @@ template(name='thanks_button')
     //         .ui.fluid.input
     //             input#thanks_message_text(type='text')
     //     .actions
-    //         .ui.cancel.basic.button
+    //         .ui.cancel.button
     //             // i.ban.icon
     //             | No Thanks
     //         .ui.teal.approve.labeled.icon.button 
@@ -37,10 +37,10 @@ template(name='thanks_button')
 
 template(name='reflect_button')
     if currentUser
-        #reflect.ui.circular.basic.icon.button(data-tooltip='Reflect in Journal')
+        #reflect.ui.icon.button(data-tooltip='Reflect in Journal')
             +icon48 name='mirror' classes='ui mini inline image'
     else
-        .ui.circular.basic.disabled.icon.button(data-tooltip='Reflect in Journal')
+        .ui.disabled.icon.button(data-tooltip='Reflect in Journal')
             +icon48 name='mirror' classes='ui mini inline image'
 
 template(name='big_both_voter')
@@ -56,9 +56,9 @@ template(name='rank')
     .ui.tiny.statistic
         .value #{rank_doc}
         .label Rank
-    #increase_index.ui.icon.basic.circular.button
+    #increase_index.ui.icon.button
         +icon48 name="chevron-up" classes='ui mini inline image'
-    // #decrease_index.ui.icon.basic.circular.button
+    // #decrease_index.ui.icon.button
     //     i.chevron.down.icon
 
 
@@ -68,12 +68,12 @@ template(name='rank')
 template(name='toggle_friend')
     if currentUser
         if is_friend
-            #remove_friend.ui.basic.button
-                +icon48 name="minus" classes='ui mini inline image'
+            #remove_friend.ui.icon.button
+                i.minus.icon
                 |Unfriend
         else
-            #add_friend.ui.basic.button
-                +icon48 name="plus" classes='ui mini inline image'
+            #add_friend.ui.button
+                i.plus.icon
                 |Friend
 
 
@@ -81,14 +81,13 @@ template(name='toggle_friend')
 template(name='session_edit_button')
     if currentUser
         unless is_editing
-            .edit_this.ui.basic.icon.circular.button(title="Edit #{tags}" class=button_classes)
-                +icon48 name="edit" classes='ui mini inline image'
-                // i.icon
+            .edit_this.ui.icon.button(title="Edit #{tags}" class=button_classes)
+                i.pencil.icon
                 // |Edit
         else
-            .ui.center.aligned.basic.segment
-                .save_doc.ui.basic.circular.large.icon.button(class=button_classes)
-                    +icon48 name="checkmark" classes='ui mini inline image'
+            .ui.center.aligned.segment
+                .save_doc.ui.large.icon.button(class=button_classes)
+                    i.checkmark.icon
                 +delete_button
 
                 
@@ -102,14 +101,12 @@ template(name='session_edit_icon')
 template(name='edit_button')
     if currentUser
         unless editing
-            .edit_this.ui.basic.button(data-tooltip=tags)
-                i.icon
-                    +icon24 name='edit' classes='ui mini inline image'
+            .edit_this.ui.button(data-tooltip=tags)
+                i.pencil.icon
                 |Edit
         else
             .save_doc.ui.green.button
-                i.icon
-                    +icon24 name='checkmark' classes='ui mini inline image'
+                i.checkmark.icon
                 |Save
                 
 template(name='edit_icon')
@@ -125,7 +122,7 @@ template(name='edit_link')
         unless editing
             a.edit_this Edit
         else
-            .save_doc.ui.basic.large.button
+            .save_doc.ui.large.button
                 +icon24 name='checked' classes='ui mini inline image'
                 |Save
 
@@ -138,13 +135,13 @@ template(name='add_to_cart')
                     i.corner.green.plus.icon
                 |Add to Cart
         else
-            .ui.fluid.labeled.basic.button
-                #remove_from_cart.ui.basic.teal.button
+            .ui.fluid.labeled.button
+                #remove_from_cart.ui.teal.button
                     i.large.icons
                         i.add.to.cart.icon
                         i.corner.red.minus.icon
                     |Remove from Cart
-                a.ui.basic.right.pointing.label(href='/cart')
+                a.ui.right.pointing.label(href='/cart')
                     |View Cart
     else        
             .ui.fluid.disabled.button
@@ -155,11 +152,11 @@ template(name='add_to_cart')
 
 template(name='delete_button')
     unless confirming
-        .delete.ui.basic.icon.circular.button
+        .delete.ui.icon.button
             i.red.remove.icon
     else
-        .ui.basic.circular.button.cancel Cancel
-        .ui.red.circular.button.confirm Confirm Delete
+        .ui.button.cancel Cancel
+        .ui.red.button.confirm Confirm Delete
         
 template(name='delete_link')
     unless confirming
@@ -194,7 +191,7 @@ template(name='published')
                 +icon48 name='invisible' classes='ui mini inline image'
                 if is_private
                     | Private
-        // .ui.large.basic.label
+        // .ui.large.label
         //     +icon48 name='invisible' classes='ui mini inline image'
         // if can_edit
 
@@ -204,13 +201,13 @@ template(name='published')
 
 
 template(name='favorite_button')
-    .ui.basic.icon.button.favorite_item(class=favorite_item_class)
-        +icon24 name='heart' classes=''
+    .ui.icon.button.favorite_item(class=favorite_item_class)
+        i.heart.icon
         if favorite_count
             | #{favorite_count}
 
 template(name='mark_complete_button')
-    .mark_complete.ui.circular.icon.button(class=complete_button_class) 
+    .mark_complete.ui.icon.button(class=complete_button_class) 
         if completed
             +icon48 name='checkmark' classes='ui mini inline image'
             // | Completed
@@ -219,7 +216,7 @@ template(name='mark_complete_button')
             // | Mark Complete
         
 template(name='mark_doc_complete_button')
-    .mark_complete.ui.circular.icon.basic.button(class=complete_button_class) 
+    .mark_complete.ui.icon.button(class=complete_button_class) 
         if complete
             +icon48 name='checkmark' classes='ui mini inline image'
             // | Completed
@@ -229,15 +226,15 @@ template(name='mark_doc_complete_button')
         
 template(name='mark_doc_approved_button')
     if approved
-        .unapprove.ui.circular.icon.basic.button(data-tooltip='Unapprove')
+        .unapprove.ui.icon.button(data-tooltip='Unapprove')
             +ultraviolet_icon40 name='approval' classes='ui mini inline image'
     else
-        .approve.ui.circular.icon.basic.button(data-tooltip='Approve')
+        .approve.ui.icon.button(data-tooltip='Approve')
             +icon48 name='approval' classes='ui mini inline image'
          
 template(name='bookmark_button')
-    .bookmark_button.ui.circular.icon.button(class=bookmark_button_class data-tooltip='Bookmark') 
-        +icon48 name='bookmark' classes='ui mini inline image'
+    .bookmark_button.ui.icon.button(class=bookmark_button_class data-tooltip='Bookmark') 
+        i.bookmark.icon
         // if bookmarked
         //     | Bookmarked
         // else
@@ -245,7 +242,7 @@ template(name='bookmark_button')
         
         
 template(name='pin_button')
-    .pin_button.ui.circular.icon.button(class=pin_button_class data-tooltip='Pin this') 
+    .pin_button.ui.icon.button(class=pin_button_class data-tooltip='Pin this') 
         if pinned
             +icon24 name="push-pin" classes='ui mini inline image'
             // | Pinned
@@ -259,27 +256,27 @@ template(name='pin_corner_button')
         +icon48 name="push-pin" classes='ui mini inline image'
         
 template(name='view_full_button')
-    a.ui.basic.circular.icon.button(href="/view/#{_id}" class=classes data-tooltip='View Full')
-        +icon48 name="double-right" classes='ui mini inline image'
+    a.ui.icon.button(href="/view/#{_id}" data-tooltip='View Full')
+        i.right.arrow.icon
 
 
 template(name='toggle_editing_button')
     if can_edit
         if editing
-            #toggle_off_editing.ui.basic.circular.button(data-position='bottom center' data-tooltip='Save')
-                +icon48 name='checkmark' classes='ui mini inline image'
+            #toggle_off_editing.ui.button(data-position='bottom center' data-tooltip='Save')
+                i.check.icon
         else
-            #toggle_editing.ui.basic.circular.button(data-position="bottom center" data-tooltip='Edit')
-                +icon48 name='edit' classes='ui mini inline image'
+            #toggle_editing.ui.button(data-position="bottom center" data-tooltip='Edit')
+                i.pencil.icon
             // if tags
             // else
-                // .ui.fluid.basic.disabled.circular.button Add Tags to Save
+                // .ui.fluid.disabled.button Add Tags to Save
 
 
 
 template(name='add_doc_button')
-    #add_doc.ui.basic.circular.fluid.button
-        +icon48 name='plus' classes='ui mini inline image'
+    #add_doc.ui.fluid.button
+        i.plus.icon
         | #{add_button_text}
 
 
@@ -307,5 +304,5 @@ template(name='toggle_zen_mode_button')
         
         
 template(name='view_tags_button')
-    .ui.circular.basic.button(data-tooltip=tags)
+    .ui.button(data-tooltip=tags)
         +icon48 name='hashtag' classes='ui inline image'

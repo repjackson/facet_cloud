@@ -263,3 +263,25 @@ Meteor.publish 'components', ->
 #     Docs.find
 #         type: 'doc_template'
 #         doc_type: doc.type
+
+
+Meteor.publish 'my_profile', ->
+    Meteor.users.find @userId,
+        fields:
+            tags: 1
+            profile: 1
+            username: 1
+            image_id: 1
+            courses: 1
+
+
+Meteor.publish 'user_profile', (username)->
+    Meteor.users.find username:username,
+        fields:
+            tags: 1
+            profile: 1
+            username: 1
+            image_id: 1
+            courses: 1
+            points: 1
+            followers: 1

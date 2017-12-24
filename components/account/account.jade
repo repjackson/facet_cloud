@@ -1,27 +1,54 @@
-template(name='edit_account')
-    .ui.container.segment
-        .ui.form
-            .field
-                label Email
-                // input(type='text' value=currentUser.emails[0].address)
-            .field
-                .ui.segment
-                    label Change Password
-                    // input.disabled(type='text' value=currentUser.profile.name)
-        
+template(name='account')
+    .ui.container
+        h1.ui.center.aligned.header 
+            i.settings.icon
+            |Account
+        |{{> atForm state='changePwd'}}
+        h2.ui.header 
+            i.mail.icon
+            |Email(s)
+        .ui.segment
+            .ui.divided.list
+                each currentUser.emails
+                    .item 
+                        // unless verified
+                        //     .right.floated.content
+                        //         .ui.basic.button Verify
+                        .content
+                            |#{address}
+                            if verified
+                                .ui.green.basic.label Verified
+                            else
+                                .ui.basic.label Unverified
+                                .send_verification_email.ui.basic.button Verify
+            .ui.action.fluid.input
+                input#new_email(type='email')
+                #add_email.ui.submit.blue.button Add Email Address
+        h2.ui.header 
+            i.pencil.icon
+            |Change Username 
+        .ui.segment
+            .ui.header Current: #{currentUser.username}
+            .ui.action.fluid.input
+                input#username(type='text')
+                #change_username.ui.submit.blue.button Submit
+            
 template(name='account_nav')
-    .ui.menu
+    .ui.stackable.menu
         .ui.container
+            a.item(href="/dashboard" class="{{isActivePath '/dashboard'}}")
+                i.dashboard.icon
+                |Dashboard
             a.item(href="/account/profile/edit" class="{{isActivePath '/account/profile/edit'}}")
                 i.user.icon
                 |Profile
-            // a.item(href='/account/social' class="{{isActivePath '/account/social'}}")
-            //     i.user.icon
-            //     |Social Media Accounts
+            a.item(href='/account/social' class="{{isActivePath '/account/social'}}")
+                i.user.icon
+                |Social Media Accounts
             a.item(href='/account/favorites' class="{{isActivePath '/account/favorites'}}")
                 i.heart.icon
                 |Favorites
-            // a.item(href='/account/clouds' class="{{isActivePath '/account/clouds'}}")
-            //     i.cloud.icon
-            //     |Clouds
+            a.item(href='/account/clouds' class="{{isActivePath '/account/clouds'}}")
+                i.cloud.icon
+                |Clouds
                 

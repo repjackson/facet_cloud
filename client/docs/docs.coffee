@@ -26,7 +26,7 @@ Template.view_doc.onCreated ->
             type = null
             author_id = null
             parent_id = FlowRouter.getParam('doc_id')
-            tag_limit = 20
+            tag_limit = 42
             doc_limit = 20
             view_published = 
                 if Session.equals('admin_mode', true) then null else Session.get('view_published')
@@ -175,10 +175,10 @@ Template.view_doc.helpers
     show_right_sidebar: ->
         # if !Session.get('editing') or !Session.get('editing_id') or !Session.get('admin_mode') or @view_published_filter or @can_change_view_mode 
         if @view_published_filter or @can_change_view_mode 
-            console.log 'show right sidebar'
+            # console.log 'show right sidebar'
             true
         else 
-            console.log 'dont show right sidebar'
+            # console.log 'dont show right sidebar'
             false
             
     

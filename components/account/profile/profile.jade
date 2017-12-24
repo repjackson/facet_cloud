@@ -1,0 +1,74 @@
+template(name='profile_layout')
+    +nav
+    .ui.stackable.padded.grid
+        .four.wide.column
+            with person
+                img.ui.small.centered.rounded.image(src="{{c.url profile.image_id width=400 height=400 gravity='face' crop='fill'}}")
+                .ui.center.aligned.header
+                    if profile.first_name
+                        |#{profile.first_name} #{profile.last_name}
+                    |(#{username})
+                    unless is_user
+                        +staus_indicator
+                if is_user
+                    a.ui.fluid.large.button(href="/account/profile/edit/#{_id}") 
+                        i.pencil.icon
+                        |Edit
+                .ui.vertical.large.fluid.pointing.menu
+                    a.item(href="/profile/#{username}/about" class="{{isActiveRoute name='profile_about'}}") 
+                        i.info.icon
+                        |About
+                    unless is_user
+                        a.item(href="/profile/#{username}/contact" class="{{isActiveRoute name='profile_contact'}}") 
+                            i.phone.icon
+                            |Contact #{name}
+                    a.item(href="/profile/#{username}/karma" class="{{isActiveRoute name='profile_karma'}}") 
+                        i.heartbeat.icon
+                        | Karma
+            if is_person_by_username
+                .ui.vertical.fluid.pointing.menu
+                    a.item(href="/profile/#{currentUser.username}/account" class="{{isActiveRoute name='account_settings'}}") 
+                        i.settings.icon
+                        |Account Settings
+                .ui.vertical.fluid.menu
+                    a#logout.item(href="#" data-position="bottom center" data-content="Log Out")
+                        i.sign.out.icon
+                        |Log Out
+
+
+        .ten.wide.column
+            +Template.dynamic template=profile_content
+
+
+        
+        
+template(name='profile_about')
+    with person
+        h1.ui.center.aligned.header 
+            i.info.icon
+            |About
+        .ui.hidden.divider
+        if tags
+            .ui.header 
+                i.tags.icon
+                | Tags
+            each tags
+                .user_tag.ui.large.label #{this}
+        if profile.location
+            .ui.header 
+                i.location.arrow.icon
+                | #{profile.location}
+        if profile.about_me
+            .ui.header About Me
+            |#{profile.about_me}
+        .ui.header My True Colors Are:
+        +color_dots
+        if profile.if_knew_me
+            .ui.header If you really knew me you would know…
+            |#{profile.if_knew_me}
+        if profile.if_not_working
+            .ui.header If I am not at work or in class then I am probably…
+            |#{profile.if_not_working}
+
+        
+        

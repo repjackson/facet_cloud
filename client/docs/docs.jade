@@ -5,20 +5,20 @@ template(name='view_doc')
                 .centered.middle.aligned.row
                     if parent
                         if parent.can_access
-                            a.ui.basic.circular.button(href="/view/#{parent._id}")
+                            a.ui.button(href="/view/#{parent._id}")
                                 if parent.icon_class
                                     +icon48 name=parent.icon_class classes='ui mini inline image'
                                 else
                                     +icon48 name='chevron-up' classes='ui mini inline image'
                                 | #{parent.title}
                     // else if admin_mode
-                    //     #create_parent.ui.basic.circular.button Create Parent
+                    //     #create_parent.ui.button Create Parent
                     
             .centered.middle.aligned.row
                 .mobile.hidden.four.wide.center.aligned.column
                     unless is_editing_something
                         if younger_sibling
-                            a.ui.basic.circular.button(href="/view/#{younger_sibling._id}")
+                            a.ui.button(href="/view/#{younger_sibling._id}")
                                 if younger_sibling.completed
                                     if younger_sibling.icon_class
                                         +icon48 name=younger_sibling.icon_class classes='ui mini spaced image'
@@ -58,7 +58,7 @@ template(name='view_doc')
                     unless is_editing_something
                         if older_sibling
                             if completed
-                                a.ui.basic.circular.button(href="/view/#{older_sibling._id}")
+                                a.ui.button(href="/view/#{older_sibling._id}")
                                     | #{older_sibling.title}
                                     if older_sibling.icon_class
                                         if older_sibling.completed
@@ -66,7 +66,7 @@ template(name='view_doc')
                                         else
                                             +dots100 name=older_sibling.icon_class classes='ui mini spaced image'
                             else
-                                .ui.basic.disabled.circular.button
+                                .ui.disabled.button
                                     | #{older_sibling.title} &nbsp;
                                     if older_sibling.icon_class
                                         if older_sibling.completed
@@ -75,17 +75,17 @@ template(name='view_doc')
                                             +dots100 name=older_sibling.icon_class classes='ui mini spaced image'
                         else if number 
                             if is_author
-                                #add_older_sibling.ui.basic.button Add Older Sibling
+                                #add_older_sibling.ui.button Add Older Sibling
             .centered.row
                 unless is_editing_something
                     .center.aligned.four.wide.column
                         if is_admin
-                            #user_add.ui.large.circular.basic.blue.icon.button
-                                +icon48 name='plus' classes='ui mini inline image'
+                            #user_add.ui.large.blue.icon.button
+                                i.plus.icon
                                 // | #{child_template}
                         else if can_add
-                            #user_add.ui.large.circular.basic.icon.button
-                                +icon48 name='plus' classes='ui mini inline image'
+                            #user_add.ui.large.icon.button
+                                i.plus.icon
                                 // | #{child_template}
                         if session_completion
                             unless editing_session_id
@@ -106,8 +106,8 @@ template(name='view_doc')
                     if editing
                         .ui.styled.fluid.accordion
                             h3.active.title
-                                +icon96 name="rename" classes='ui mini inline image'
-                                | '#{title}' Fields
+                                +icon96 name="electronics" classes='ui mini inline image'
+                                | '#{title}' Components
                                 i.dropdown.icon
                             .active.content
                                 each components
@@ -125,7 +125,7 @@ template(name='view_doc')
                                 i.dropdown.icon
 
                             .content
-                                #admin_add.ui.basic.button
+                                #admin_add.ui.button
                                     i.plus.icon
                                     | Add Child Document
                                 each children
@@ -137,13 +137,13 @@ template(name='view_doc')
                                     // .ui.segment(class=field_segment_class)
                                     div
                                         +Template.dynamic template=slug data=doc
-                            // .ui.basic.center.aligned.segment
+                            // .ui.center.aligned.segment
                             // if response_completion
                             //     +response
                             unless response_doc
                                 if response_completion
-                                    .ui.center.aligned.basic.segment
-                                        #create_response.ui.circular.basic.button
+                                    .ui.center.aligned.segment
+                                        #create_response.ui.button
                                             +icon48 name='response' classes='ui inline image'
                                             | Respond
                             if is_admin
@@ -157,14 +157,14 @@ template(name='view_doc')
                                     // +card_view
                                     +Template.dynamic template=doc_child_view
                             if read_completion
-                                .ui.center.aligned.basic.segment
+                                .ui.center.aligned.segment
                                     if currentUser
                                         if read
-                                            .mark_unread.ui.circular.blue.button 
+                                            .mark_unread.ui.blue.button 
                                                 +icon48 name='read-message' classes='ui inline image'
                                                 |Mark Unread
                                         else
-                                            .mark_read.ui.basic.circular.button
+                                            .mark_read.ui.button
                                                 +icon48 name='message' classes='ui mini inline image'
                                                 |Mark Read
                         else
@@ -179,7 +179,7 @@ template(name='view_doc')
                         .three.wide.column
                             if is_admin
                                 if completion_type
-                                    #calculate_completion.ui.basic.circular.icon.button(data-tooltip='Calculate Completion')
+                                    #calculate_completion.ui.icon.button(data-tooltip='Calculate Completion')
                                         +icon48 name='reset' classes='ui mini spaced image'
                                 if completors.count
                                     .ui.segment
@@ -195,7 +195,7 @@ template(name='view_doc')
                                                         .description
                                                             +tiny_color_dots
                                                             // each five_tags
-                                                            //     .ui.basic.label #{this}
+                                                            //     .ui.label #{this}
                                     
                             if view_published_filter
                                 +published_filter
@@ -212,11 +212,11 @@ template(name='view_doc')
 template(name='doc_editing_sidebar')
     .ui.styled.fluid.accordion
         h3.title
-            +icon48 name='rename' classes='ui mini inline image'
-            | Field Menu
+            +icon48 name='electronics' classes='ui mini inline image'
+            | Components
             i.dropdown.icon
             each selected_fields
-                .ui.basic.label #{title}
+                .ui.label #{title}
         .content
             +field_menu
 
@@ -235,7 +235,7 @@ template(name='doc_editing_sidebar')
             +icon48 name='access' classes='ui mini inline image'
             | Access
             i.dropdown.icon
-            .ui.basic.label #{access}
+            .ui.label #{access}
         .content
             +toggle_key key='access' value='payment' icon='online-payment' label='Payment'
             +toggle_key key='access' value='complete_previous' icon='past' label='Complete Younger Sibling'
@@ -246,7 +246,7 @@ template(name='doc_editing_sidebar')
             +icon48 name='task-completed' classes='ui mini inline image'
             |Completion Type
             i.dropdown.icon
-            .ui.basic.label #{completion_type}
+            .ui.label #{completion_type}
         .content
             +toggle_key key='completion_type' value='response' icon='response' label='Response'
             +toggle_key key='completion_type' value='mark_read' icon='read-message' label='Mark Read'
@@ -258,7 +258,7 @@ template(name='doc_editing_sidebar')
             +icon48 name='flow-chart' classes='ui mini inline image'
             | Child View
             i.dropdown.icon
-            .ui.basic.label #{child_view}
+            .ui.label #{child_view}
         .content
             +toggle_key key='child_view' value='grid_item' icon='grid-view' label='Grid'
             // +toggle_key key='child_view' value='list' icon='list-view' label='List'
@@ -281,10 +281,10 @@ template(name='doc_editing_sidebar')
             | Child Options
             i.dropdown.icon
             if can_add
-                .ui.basic.label User Add
+                .ui.label User Add
             if can_vote
-                .ui.basic.label User Vote
-                // .ui.basic.label Add: #{child_template}
+                .ui.label User Vote
+                // .ui.label Add: #{child_template}
         .content
             +toggle_key key='can_add' icon='add-subnode' label='Users Can Add'
             +toggle_key key='can_vote' icon='elections' label='Vote'
@@ -309,8 +309,8 @@ template(name='doc_editing_sidebar')
             +icon48 name='sort' classes='ui mini inline image'
             | Sort
             i.dropdown.icon
-            .ui.basic.label #{sort_by}
-                // .ui.basic.label Add: #{child_template}
+            .ui.label #{sort_by}
+                // .ui.label Add: #{child_template}
         .content
             +toggle_key key='sort_by' value='number' icon='number' label='Number'
             +toggle_key key='sort_by' value='timestamp' icon='clock' label='Creation Date'
@@ -323,16 +323,17 @@ template(name='doc_editing_sidebar')
             i.dropdown.icon
         .content
             +toggle_key key='view_published_filter' icon='visible' label='Published'
-            +toggle_key key='result_limit' value='1' icon='' label='1'
-            +toggle_key key='result_limit' value='5' icon='' label='5'
-            +toggle_key key='result_limit' value='10' icon='' label='10'
+            h5.ui.header Result Amount
+            +toggle_key key='result_limit' value='1' icon='1' label=''
+            +toggle_key key='result_limit' value='5' icon='5' label=''
+            +toggle_key key='result_limit' value='10' icon='10' label=''
 
         h3.title 
             +icon48 name='monarch' classes='ui mini spaced image'
             |Admin
             i.dropdown.icon
         .content
-            #move_up.ui.basic.button
+            #move_up.ui.button
                 +icon48 name='up' classes='ui mini spaced image'
                 | Move Above Parent
             +edit_author
@@ -353,7 +354,7 @@ template(name='doc_editing_sidebar')
              
 template(name='field_menu')
     each unselected_fields
-        .select_component.ui.basic.compact.small.button
+        .select_component.ui.compact.small.button
             +icon48 name=icon_class classes='ui mini spaced image'
             |#{title}
                 
@@ -380,7 +381,7 @@ template(name='editing_session_question')
                     +content
                     +session_edit_button
             else
-                .ui.center.aligned.basic.segment
-                    .create_response.ui.circular.basic.button
+                .ui.center.aligned.segment
+                    .create_response.ui.button
                         +icon48 name='response' classes='ui inline image'
                         | Respond

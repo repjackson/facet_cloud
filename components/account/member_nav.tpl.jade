@@ -1,0 +1,21 @@
+.ui.stackable.menu
+    .ui.text.container
+        a.item(href="/dashboard" class="{{isActivePath '/dashboard'}}")
+            .ui.image
+                img(src="https://png.icons8.com/dashboard/color/48" title="Dashboard" width="48" height="48")
+            |Dashboard
+        a.item(href="/profile/#{currentUser.username}" class="{{isActiveRoute name='view_profile'}}")
+            if currentUser.profile.image_id
+                img.ui.avatar.image(src="{{c.url currentUser.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
+            else
+                i.user.icon
+            | Profile
+        // a.item(href='/account/social' class="{{isActivePath '/account/social'}}")
+        //     i.user.icon
+        //     |Social Media Accounts
+        a.item(href='/account/favorites' class="{{isActivePath '/account/favorites'}}")
+            i.heart.icon
+            |Favorites
+        // a.item(href='/account/clouds' class="{{isActivePath '/account/clouds'}}")
+        //     i.cloud.icon
+        //     |Clouds

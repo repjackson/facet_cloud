@@ -783,4 +783,11 @@ Template.imdb.events
             $set: imdb: imdb
         Meteor.call 'import_imdb', imdb, @_id
             
+Template.recipe.events
+    'blur #recipe': (e,t)->
+        recipe = $(e.currentTarget).closest('#recipe').val()
+        Docs.update @_id,
+            $set: recipe: recipe
+        Meteor.call 'import_recipe', recipe, @_id
+            
             

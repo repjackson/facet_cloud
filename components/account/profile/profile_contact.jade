@@ -1,0 +1,18 @@
+template(name='profile_contact')
+    h1.ui.center.aligned.header
+        +icon96 name='contact' classes='ui mini inline image'
+        |Contact
+    if conversation_with_user
+        with conversation_with_user
+            +conversation_messages_pane
+    else    
+        .ui.header No Conversations
+        if currentUser
+            #create_conversation_with_user.ui.button 
+                +icon48 name='new-topic' classes='ui mini inline image'
+                |Start Conversation with #{user.profile.first_name}
+        else
+            a.ui.disabled.button(href='/sign-in')
+                +icon48 name='new-topic' classes='ui mini inline image'
+                |Sign in to contact #{user.profile.first_name}
+        

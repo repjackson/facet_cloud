@@ -1,0 +1,9 @@
+.ui.horizontal.divider.header 
+    i.comments.outline.icon
+    |Public Conversations with #{user.name}
+each public_conversations_with_user
+    +conversation_messages_pane
+.ui.horizontal.dividing.header
+    a.ui.teal.button(href='/conversations')
+        i.external.icon
+        |View All Conversations

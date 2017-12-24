@@ -4,5 +4,8 @@
         each favorites
             .item
                 a(href="/view/#{_id}") #{title} 
+                each tags
+                    .ui.label #{this}
+                +view_full_button
                 +favorite
         

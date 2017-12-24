@@ -1,0 +1,65 @@
+.ui.basic.segment.container
+    with user
+        h1.ui.center.aligned.header Edit #{username} Profile
+        .ui.large.form
+            .ui.stackable.grid
+                .five.wide.column    
+                    .field
+                        if profile.image_id
+                            label Image
+                            .ui.centered.image
+                                img.ui.image(src="{{c.url profile.image_id width=400 height=400 gravity='face' crop='fill'}}")
+                                a#remove_photo.ui.right.corner.link.label
+                                    i.remove.red.link.icon
+                        else
+                            label Add Profile Image
+                            input(type='file' name='upload_picture' accept='image/*')
+                .ten.wide.column    
+                    if enrolling_in_demo
+                        h4.ui.orange.header Thanks for registering! Please finish creating your profile below before continuing on to the course.
+                    .field
+                        label First Name 
+                        .ui.input
+                            input#first_name(type='text' value=profile.first_name)
+                    .field
+                        label Last Name 
+                        .ui.input
+                            input#last_name(type='text' value=profile.last_name)
+                    .field
+                        label Email
+                        each emails
+                            .ui.basic.label #{address}
+                            if verified
+                                .ui.basic.green.label Verified
+                            else
+                                .ui.basic.label Unverified
+                    .field
+                        label Location 
+                        .ui.input
+                            input#location(type='text' value=profile.location)
+                    .field
+                        label Tags (please select a few key words that embody yourself, interests, etc.)
+                        each tags
+                            .ui.button.person_tag
+                                i.minus.icon
+                                |#{this}
+                        .ui.left.icon.input
+                            i.add.icon
+                            input#add_tag(type='text' placeholder='Press enter after each tag' maxlength='50')
+                    .field
+                        label About Me 
+                        .ui.input
+                            textarea#about_me(type='textarea' maxlength="250" rows='3')
+                                |#{profile.about_me}
+                    .field
+                        label If you really knew me you would know…
+                        .ui.input
+                            input#if_knew_me(type='text' value=profile.if_knew_me)
+                    .field
+                        label If I am not at work or in class then I am probably…
+                        .ui.input
+                            input#if_not_working(type='text' value=profile.if_not_working)
+        .field
+                .ui.center.aligned.basic.segment
+                    #save_profile.ui.center.aligned.huge.button
+                        |Save
