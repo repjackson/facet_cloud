@@ -81,26 +81,18 @@ Template.view_doc.helpers
         
         else if Roles.userIsInRole(Meteor.userId(), 'admin')
             Docs.find {
-                type: $ne: 'session'
-                parent_id: FlowRouter.getParam 'doc_id'
             }, {
                 sort: sort_object
                 limit: doc_limit
             }
         else
             Docs.find {
-                type: $ne: 'session'
-                parent_id: FlowRouter.getParam 'doc_id'
                 published: 1
             }, {
                 sort: sort_object
                 limit: doc_limit
             }
 
-    components: ->        
-        Docs.find
-            # type: 'component'
-            parent_id: 'MzHSPbvCYPngq2Dcz'
             
 
     slug_exists: ->
@@ -114,211 +106,148 @@ Template.view_doc.helpers
             'ten wide column' 
         else if Session.equals 'admin_mode', true
             'eight wide column' 
-        else if @child_view is 'nav' and !@theme_tags_facet
-            'fourteen wide column'
-        else if @child_view is 'nav' and !@view_published_filter or !@can_change_view_mode
-            'twelve wide column'
-        else
-            'eight wide column'
-        # else if @theme_tags_facet or @location_tags_facet or @intention_tags_facet or @username_facet
-        #     'eight wide column'
     field_segment_class: -> if Session.equals 'editing', true then '' else 'basic compact'
     
     
-    completors: ->
-        if @completed_by
-            if @completed_by.length > 0
-        # console.log @completed_by
-                Meteor.users.find _id: $in: @completed_by
-        else 
-            false
-        
-    
-    response_completion: -> @completion_type is 'response'
-    read_completion: -> @completion_type is 'mark_read'
-    session_completion: -> @completion_type is 'session'
-    
-    read: -> @read_by and Meteor.userId() in @read_by
-    
-    response_doc: -> 
-        response_doc = Docs.findOne
-            parent_id: FlowRouter.getParam('doc_id')
-            author_id: Meteor.userId()
-        if response_doc then return true else false
-    
-    doc_child_view: ->
-        doc = Docs.findOne FlowRouter.getParam('doc_id')
-        doc.child_view
-        # if doc.can_change_view_mode
-        #     switch Session.get('view_mode')
-        #         when 'list' then 'list_item'
-        #         when 'cards' then 'card_view'
-        #         when 'flash_cards' then 'flash_card'
-        #         when 'qa_session' then 'q_a'
-        # else
-        # console.log doc.child_view
-        # console.log typeof doc.child_view
-        # if doc.child_view is 'grid_item'
-        #     console.log 'choosing nav'
-        #     return 'grid_item'
-        # else if doc.child_view is 'cards'
-        #     console.log 'card_view'
-        #     return 'card_view'
-    
-    q_a_view: -> @child_view is 'q_a'
-    grandchild_list_view: -> @child_view is 'grandchild_list'
-    quiz_view: -> @child_view is 'quiz'
-    
-    is_editing_session_id: -> Session.get 'editing_session_id'
-
-
-    show_right_sidebar: ->
-        # if !Session.get('editing') or !Session.get('editing_id') or !Session.get('admin_mode') or @view_published_filter or @can_change_view_mode 
-        if @view_published_filter or @can_change_view_mode 
-            # console.log 'show right sidebar'
-            true
-        else 
-            # console.log 'dont show right sidebar'
-            false
             
     
-Template.doc_editing_sidebar.helpers
-    toggle_theme_tags_class: -> if @theme_tags_facet is true then 'blue' else 'basic'
-    selected_fields: ->
-        doc = Docs.findOne FlowRouter.getParam('doc_id')
-        keys = _.keys doc
-        Docs.find
-            # type: 'component'
-            parent_id: 'MzHSPbvCYPngq2Dcz'
-            slug: $in: keys
+# Template.doc_editing_sidebar.helpers
+#     toggle_theme_tags_class: -> if @theme_tags_facet is true then 'blue' else 'basic'
+#     selected_fields: ->
+#         doc = Docs.findOne FlowRouter.getParam('doc_id')
+#         keys = _.keys doc
+#         Docs.find
+#             # type: 'component'
+#             parent_id: 'MzHSPbvCYPngq2Dcz'
+#             slug: $in: keys
     
-    child_field_class: ->
-        doc = Docs.findOne FlowRouter.getParam('doc_id')
-        if @slug in doc.child_fields then 'blue' else 'basic'
+#     child_field_class: ->
+#         doc = Docs.findOne FlowRouter.getParam('doc_id')
+#         if @slug in doc.child_fields then 'blue' else 'basic'
     
-    components: ->        
-        Docs.find
-            # type: 'component'
-            parent_id: 'MzHSPbvCYPngq2Dcz'
+#     components: ->        
+#         Docs.find
+#             # type: 'component'
+#             parent_id: 'MzHSPbvCYPngq2Dcz'
 
 
-Template.view_doc.events
-    'click .mark_read': (e,t)-> 
-        Meteor.call 'mark_read', @_id, =>
-            Meteor.call 'calculate_completion', @_id
+# Template.view_doc.events
+#     'click .mark_read': (e,t)-> 
+#         Meteor.call 'mark_read', @_id, =>
+#             Meteor.call 'calculate_completion', @_id
         
-    'click .mark_unread': (e,t)-> 
-        Meteor.call 'mark_unread', @_id, =>
-            Meteor.call 'calculate_completion', @_id
+#     'click .mark_unread': (e,t)-> 
+#         Meteor.call 'mark_unread', @_id, =>
+#             Meteor.call 'calculate_completion', @_id
     
-    'click #create_parent': ->
-        new_parent_id = Docs.insert {}
-        Docs.update FlowRouter.getParam('doc_id'),
-            $set: parent_id: new_parent_id
-        FlowRouter.go "/view/#{new_parent_id}" 
+#     'click #create_parent': ->
+#         new_parent_id = Docs.insert {}
+#         Docs.update FlowRouter.getParam('doc_id'),
+#             $set: parent_id: new_parent_id
+#         FlowRouter.go "/view/#{new_parent_id}" 
         
-    'click #create_response': ->
-        new_id = Docs.insert
-            parent_id: FlowRouter.getParam('doc_id')
-        Session.set 'editing_id', new_id
+#     'click #create_response': ->
+#         new_id = Docs.insert
+#             parent_id: FlowRouter.getParam('doc_id')
+#         Session.set 'editing_id', new_id
 
       
-    'click #calculate_completion': ->
-        console.log 'hi', FlowRouter.getParam('doc_id')
-        Meteor.call 'calculate_completion', FlowRouter.getParam('doc_id')
+#     'click #calculate_completion': ->
+#         console.log 'hi', FlowRouter.getParam('doc_id')
+#         Meteor.call 'calculate_completion', FlowRouter.getParam('doc_id')
       
-    'click #admin_add': ->
-        new_id = Docs.insert
-            parent_id: FlowRouter.getParam('doc_id')
-        # FlowRouter.go("/view/#{new_id}")
-        # Session.set 'editing', true
+#     'click #admin_add': ->
+#         new_id = Docs.insert
+#             parent_id: FlowRouter.getParam('doc_id')
+#         # FlowRouter.go("/view/#{new_id}")
+#         # Session.set 'editing', true
       
-    'click #user_add': ->
-        new_id = Docs.insert
-            parent_id: FlowRouter.getParam('doc_id')
-        Session.set 'editing_id', new_id
+#     'click #user_add': ->
+#         new_id = Docs.insert
+#             parent_id: FlowRouter.getParam('doc_id')
+#         Session.set 'editing_id', new_id
       
-    'click #new_session': ->
-        new_session_id = Docs.insert
-            parent_id: FlowRouter.getParam('doc_id')
-            type: 'session'
-        Session.set 'editing_session_id', new_session_id
+#     'click #new_session': ->
+#         new_session_id = Docs.insert
+#             parent_id: FlowRouter.getParam('doc_id')
+#             type: 'session'
+#         Session.set 'editing_session_id', new_session_id
       
-    'click #add_older_sibling': ->
-        new_older_sibling_id = Docs.insert
-            number: @number+1
-            parent_id: @parent_id
-        FlowRouter.go "/view/#{new_older_sibling_id}" 
+#     'click #add_older_sibling': ->
+#         new_older_sibling_id = Docs.insert
+#             number: @number+1
+#             parent_id: @parent_id
+#         FlowRouter.go "/view/#{new_older_sibling_id}" 
 
       
-    'click #toggle_admin_mode': ->
-        if Session.equals('admin_mode', true) then Session.set('admin_mode', false)
-        else if Session.equals('admin_mode', false) then Session.set('admin_mode', true)
-        Session.set 'editing_id', null
-        Session.set 'view_published', null
+#     'click #toggle_admin_mode': ->
+#         if Session.equals('admin_mode', true) then Session.set('admin_mode', false)
+#         else if Session.equals('admin_mode', false) then Session.set('admin_mode', true)
+#         Session.set 'editing_id', null
+#         Session.set 'view_published', null
       
       
             
-Template.doc_editing_sidebar.events        
-    'click #delete_doc': ->
-        swal {
-            title: 'Remove Document?'
-            type: 'warning'
-            animation: true
-            showCancelButton: true
-            closeOnConfirm: true
-            cancelButtonText: 'Cancel'
-            confirmButtonText: 'Remove'
-            confirmButtonColor: '#da5347'
-        }, =>
-            Docs.remove @_id
-            swal 'Removed', 'success'
-            Session.set 'editing', false
-            FlowRouter.go "/view/#{@parent_id}"
+# Template.doc_editing_sidebar.events        
+#     'click #delete_doc': ->
+#         swal {
+#             title: 'Remove Document?'
+#             type: 'warning'
+#             animation: true
+#             showCancelButton: true
+#             closeOnConfirm: true
+#             cancelButtonText: 'Cancel'
+#             confirmButtonText: 'Remove'
+#             confirmButtonColor: '#da5347'
+#         }, =>
+#             Docs.remove @_id
+#             swal 'Removed', 'success'
+#             Session.set 'editing', false
+#             FlowRouter.go "/view/#{@parent_id}"
 
-    'click .select_child_field': ->
-        doc = Docs.findOne FlowRouter.getParam('doc_id')
-        if doc.child_fields and @slug in doc.child_fields
-            Docs.update doc._id,
-                $pull: "child_fields": @slug
-        else
-            Docs.update doc._id,
-                $addToSet: "child_fields": @slug
+#     'click .select_child_field': ->
+#         doc = Docs.findOne FlowRouter.getParam('doc_id')
+#         if doc.child_fields and @slug in doc.child_fields
+#             Docs.update doc._id,
+#                 $pull: "child_fields": @slug
+#         else
+#             Docs.update doc._id,
+#                 $addToSet: "child_fields": @slug
 
 
-    'click #move_up': ->
-        doc = Docs.findOne FlowRouter.getParam('doc_id')
-        parent = Docs.findOne doc.parent_id
+#     'click #move_up': ->
+#         doc = Docs.findOne FlowRouter.getParam('doc_id')
+#         parent = Docs.findOne doc.parent_id
         
-        if confirm 'Move above parent?'
-            # console.log @parent_id
-            Docs.update doc._id,
-                $set: parent_id: parent.parent_id
+#         if confirm 'Move above parent?'
+#             # console.log @parent_id
+#             Docs.update doc._id,
+#                 $set: parent_id: parent.parent_id
             
 
 
 
 
-Template.field_menu.helpers
-    unselected_fields: ->
-        doc = Docs.findOne FlowRouter.getParam('doc_id')
-        keys = _.keys doc
-        Docs.find
-            # type: 'component'
-            parent_id: 'MzHSPbvCYPngq2Dcz'
-            slug: $nin: keys
+# Template.field_menu.helpers
+#     unselected_fields: ->
+#         doc = Docs.findOne FlowRouter.getParam('doc_id')
+#         keys = _.keys doc
+#         Docs.find
+#             # type: 'component'
+#             parent_id: 'MzHSPbvCYPngq2Dcz'
+#             slug: $nin: keys
             
-Template.field_menu.events
-    'click .select_component': ->
-        doc = Docs.findOne FlowRouter.getParam('doc_id')
-        slug = @slug
-        # console.log @field_type
-        if @field_type is 'array'
-            Docs.update doc._id,
-                $set: "#{slug}": []
-        else
-            Docs.update doc._id,
-                $set: "#{slug}": ''
+# Template.field_menu.events
+#     'click .select_component': ->
+#         doc = Docs.findOne FlowRouter.getParam('doc_id')
+#         slug = @slug
+#         # console.log @field_type
+#         if @field_type is 'array'
+#             Docs.update doc._id,
+#                 $set: "#{slug}": []
+#         else
+#             Docs.update doc._id,
+#                 $set: "#{slug}": ''
             
             
             
@@ -348,66 +277,66 @@ Template.field_menu.events
 
 
         
-Template.doc_editing_sidebar.onRendered ->
-    @autorun =>
-        if @subscriptionsReady()
-            Meteor.setTimeout ->
-                $('.ui.accordion').accordion()
-            , 1000
-            
-# Template.doc_editing_main.onRendered ->
+# Template.doc_editing_sidebar.onRendered ->
 #     @autorun =>
 #         if @subscriptionsReady()
 #             Meteor.setTimeout ->
 #                 $('.ui.accordion').accordion()
 #             , 1000
             
+# # Template.doc_editing_main.onRendered ->
+# #     @autorun =>
+# #         if @subscriptionsReady()
+# #             Meteor.setTimeout ->
+# #                 $('.ui.accordion').accordion()
+# #             , 1000
+            
             
 
-Template.toggle_key.helpers
-    toggle_key_button_class: -> 
-        # console.log @key
-        # console.log Template.parentData()
-        # console.log Template.parentData()["#{@key}"]
-        if @value
-            if Template.parentData()["#{@key}"] is @value then 'blue' else 'basic'
-        else if Template.parentData()["#{@key}"] is true then 'blue' else 'basic'
+# Template.toggle_key.helpers
+#     toggle_key_button_class: -> 
+#         # console.log @key
+#         # console.log Template.parentData()
+#         # console.log Template.parentData()["#{@key}"]
+#         if @value
+#             if Template.parentData()["#{@key}"] is @value then 'blue' else 'basic'
+#         else if Template.parentData()["#{@key}"] is true then 'blue' else 'basic'
 
 
-Template.toggle_key.events
-    'click #toggle_key': ->
-        # console.log @
-        if @value
-            Docs.update FlowRouter.getParam('doc_id'), 
-                $set: "#{@key}": "#{@value}"
-        else if Template.parentData()["#{@key}"] is true
-            Docs.update FlowRouter.getParam('doc_id'), 
-                $set: "#{@key}": false
-        else
-            Docs.update FlowRouter.getParam('doc_id'), 
-                $set: "#{@key}": true
+# Template.toggle_key.events
+#     'click #toggle_key': ->
+#         # console.log @
+#         if @value
+#             Docs.update FlowRouter.getParam('doc_id'), 
+#                 $set: "#{@key}": "#{@value}"
+#         else if Template.parentData()["#{@key}"] is true
+#             Docs.update FlowRouter.getParam('doc_id'), 
+#                 $set: "#{@key}": false
+#         else
+#             Docs.update FlowRouter.getParam('doc_id'), 
+#                 $set: "#{@key}": true
             
     
-Template.set_view_mode.helpers
-    view_mode_button_class: -> if Session.equals 'view_mode', @value then 'blue' else 'basic'
+# Template.set_view_mode.helpers
+#     view_mode_button_class: -> if Session.equals 'view_mode', @value then 'blue' else 'basic'
       
-Template.set_view_mode.events
-    'click #set_view_mode': -> Session.set 'view_mode', @value
+# Template.set_view_mode.events
+#     'click #set_view_mode': -> Session.set 'view_mode', @value
     
-Template.editing_session_question.helpers
-    response: ->
-        Docs.findOne 
-            author_id: Meteor.userId()
-            parent_id: @_id
+# Template.editing_session_question.helpers
+#     response: ->
+#         Docs.findOne 
+#             author_id: Meteor.userId()
+#             parent_id: @_id
             
-Template.editing_session_question.onCreated -> 
-    Meteor.subscribe 'author', @data._id
-    Meteor.subscribe 'child_docs', @data._id
+# Template.editing_session_question.onCreated -> 
+#     Meteor.subscribe 'author', @data._id
+#     Meteor.subscribe 'child_docs', @data._id
             
-Template.editing_session_question.events
-    'click .create_response': ->
-        new_id = Docs.insert
-            parent_id: @_id
-        Session.set 'editing_id', new_id
+# Template.editing_session_question.events
+#     'click .create_response': ->
+#         new_id = Docs.insert
+#             parent_id: @_id
+#         Session.set 'editing_id', new_id
 
       
