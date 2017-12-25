@@ -6,7 +6,7 @@ template(name='voting')
         // |#{points}
 
 template(name='thanks_button')
-    .ui.icon.button.vote_up(class=thanks_button_class data-tooltip="Thank #{author.profile.first_name} for Sharing")
+    .ui.icon.button.vote_up(class=thanks_button_class)
         +icon24 name='applause' classes='ui mini inline image'
         // img.ui.mini.image(src="https://png.icons8.com/pray-filled/ios7/50" width="50" height="50")
         // if said_thanks
@@ -256,7 +256,7 @@ template(name='pin_corner_button')
         +icon48 name="push-pin" classes='ui mini inline image'
         
 template(name='view_full_button')
-    a.ui.icon.button(href="/view/#{_id}" data-tooltip='View Full')
+    a.ui.icon.button(href="/view/#{_id}")
         i.right.arrow.icon
 
 

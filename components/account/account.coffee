@@ -1,7 +1,7 @@
         
         
 if Meteor.isClient
-    FlowRouter.route '/profile/:username/account', action: (params) ->
+    FlowRouter.route '/u/:username/account', action: (params) ->
         name: 'account_settings'
         BlazeLayout.render 'profile_layout',
             sub_nav: 'member_nav'
@@ -9,7 +9,7 @@ if Meteor.isClient
     
     
     Template.account.onCreated ->
-        @autorun -> Meteor.subscribe 'my_profile', FlowRouter.getParam('user_id') 
+        @autorun -> Meteor.subscribe 'user_profile', FlowRouter.getParam('user_id') 
     
     # Template.account.onRendered ->
     #     console.log Meteor.users.findOne(FlowRouter.getParam('user_id'))

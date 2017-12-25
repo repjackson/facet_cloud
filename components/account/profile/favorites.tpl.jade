@@ -1,0 +1,8 @@
+h2.ui.header favorites
+each favorites
+    .ui.segment
+        a(href="/view/#{_id}") #{title} 
+        each tags
+            .ui.label #{this}
+        +view_full_button
+        +favorite

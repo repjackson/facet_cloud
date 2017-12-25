@@ -2,11 +2,11 @@ template(name='account')
     .ui.container
         h1.ui.center.aligned.header 
             i.settings.icon
-            |Account
+            |account
         |{{> atForm state='changePwd'}}
         h2.ui.header 
             i.mail.icon
-            |Email(s)
+            |email(s)
         .ui.segment
             .ui.divided.list
                 each currentUser.emails
@@ -17,38 +17,18 @@ template(name='account')
                         .content
                             |#{address}
                             if verified
-                                .ui.green.basic.label Verified
+                                .ui.green.basic.label verified
                             else
-                                .ui.basic.label Unverified
-                                .send_verification_email.ui.basic.button Verify
+                                .ui.basic.label unverified
+                                .send_verification_email.ui.basic.button verify
             .ui.action.fluid.input
                 input#new_email(type='email')
-                #add_email.ui.submit.blue.button Add Email Address
+                #add_email.ui.submit.blue.button add email address
         h2.ui.header 
             i.pencil.icon
-            |Change Username 
+            |change username 
         .ui.segment
-            .ui.header Current: #{currentUser.username}
+            .ui.header current: #{currentUser.username}
             .ui.action.fluid.input
                 input#username(type='text')
-                #change_username.ui.submit.blue.button Submit
-            
-template(name='account_nav')
-    .ui.stackable.menu
-        .ui.container
-            a.item(href="/dashboard" class="{{isActivePath '/dashboard'}}")
-                i.dashboard.icon
-                |Dashboard
-            a.item(href="/account/profile/edit" class="{{isActivePath '/account/profile/edit'}}")
-                i.user.icon
-                |Profile
-            a.item(href='/account/social' class="{{isActivePath '/account/social'}}")
-                i.user.icon
-                |Social Media Accounts
-            a.item(href='/account/favorites' class="{{isActivePath '/account/favorites'}}")
-                i.heart.icon
-                |Favorites
-            a.item(href='/account/clouds' class="{{isActivePath '/account/clouds'}}")
-                i.cloud.icon
-                |Clouds
-                
+                #change_username.ui.submit.blue.button submit

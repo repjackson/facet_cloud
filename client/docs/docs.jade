@@ -3,17 +3,41 @@ template(name='view_doc')
         .ui.padded.stackable.grid
             unless editing
                 .centered.middle.aligned.row
-                    if parent
-                        if parent.can_access
-                            a.ui.button(href="/view/#{parent._id}")
-                                if parent.icon_class
-                                    +icon48 name=parent.icon_class classes='ui mini inline image'
+                    .four.wide.center.aligned.column
+                        a.ui.icon.button(href='/view/rzpRYuGK2Rwh2Cv9w' class="{{isActivePath '/view/rzpRYuGK2Rwh2Cv9w'}}") 
+                            // .facet_black F
+                            i.home.large.icon
+                        if isInRole 'admin'
+                            a#toggle_admin_mode.ui.icon.button(href='#') 
+                                if admin_mode
+                                    i.blue.protect.large.icon
                                 else
-                                    +icon48 name='chevron-up' classes='ui mini inline image'
-                                | #{parent.title}
-                    // else if admin_mode
-                    //     #create_parent.ui.button Create Parent
-                    
+                                    i.protect.large.icon
+
+                    .eight.wide.center.aligned.column
+                        if parent
+                            if parent.can_access
+                                a.ui.button(href="/view/#{parent._id}")
+                                    if parent.icon_class
+                                        +icon48 name=parent.icon_class classes='ui mini inline image'
+                                    else
+                                        +icon48 name='chevron-up' classes='ui mini inline image'
+                                    | #{parent.title}
+                        // else if admin_mode
+                        //     #create_parent.ui.button Create Parent
+                    .four.wide.center.aligned.column
+                        if currentUser
+                            a.ui.icon.button(href="/u/#{currentUser.username}")
+                                if currentUser.image_id
+                                    img.ui.avatar.image(src="{{c.url currentUser.image_id width=50 height=50 gravity='face' crop='fill'}}")
+                                else
+                                    i.user.large.icon
+                            // a#logout.ui.icon.button(href='#') 
+                            //     i.sign.out.large.icon
+                        else
+                            a.ui.icon.button(href='/sign-in') 
+                                i.sign.in.large.icon
+
             .centered.middle.aligned.row
                 .mobile.hidden.four.wide.center.aligned.column
                     unless is_editing_something

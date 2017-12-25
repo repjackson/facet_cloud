@@ -285,3 +285,7 @@ Meteor.publish 'user_profile', (username)->
             courses: 1
             points: 1
             followers: 1
+
+Meteor.publish 'favorites', ->
+    Docs.find
+        favoriters: $in: [@userId]

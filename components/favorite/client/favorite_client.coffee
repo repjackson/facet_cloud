@@ -3,7 +3,7 @@ Template.favorite.helpers
     
     favorite_item_class: -> 
         if Meteor.userId()
-            if Template.parentData(0).favoriters and Meteor.userId() in Template.parentData(0).favoriters then 'red' else 'outline'
+            if Template.parentData(0).favoriters and Meteor.userId() in Template.parentData(0).favoriters then '' else 'outline'
         else 'grey disabled'
     
 Template.favorite.events

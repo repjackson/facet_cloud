@@ -1,42 +1,78 @@
 template(name='profile_layout')
-    +nav
     .ui.stackable.padded.grid
-        .four.wide.column
+        .centered.middle.aligned.row
+            .four.wide.center.aligned.column
+                a.ui.icon.button(href='/view/rzpRYuGK2Rwh2Cv9w' class="{{isActivePath '/view/rzpRYuGK2Rwh2Cv9w'}}") 
+                    // .facet_black F
+                    i.home.large.icon
+                if isInRole 'admin'
+                    a#toggle_admin_mode.ui.icon.button(href='#') 
+                        if admin_mode
+                            i.blue.protect.large.icon
+                        else
+                            i.protect.large.icon
+
+            .eight.wide.center.aligned.column
+                if parent
+                    if parent.can_access
+                        a.ui.button(href="/view/#{parent._id}")
+                            if parent.icon_class
+                                +icon48 name=parent.icon_class classes='ui mini inline image'
+                            else
+                                +icon48 name='chevron-up' classes='ui mini inline image'
+                            | #{parent.title}
+                // else if admin_mode
+                //     #create_parent.ui.button Create Parent
+            .four.wide.center.aligned.column
+                if currentUser
+                    a.ui.icon.button(href="/u/#{currentUser.username}")
+                        if currentUser.image_id
+                            img.ui.avatar.image(src="{{c.url currentUser.image_id width=50 height=50 gravity='face' crop='fill'}}")
+                        else
+                            i.user.large.icon
+                    // a#logout.ui.icon.button(href='#') 
+                    //     i.sign.out.large.icon
+                else
+                    a.ui.icon.button(href='/sign-in') 
+                        i.sign.in.large.icon
+        .two.wide.column
             with person
                 img.ui.small.centered.rounded.image(src="{{c.url profile.image_id width=400 height=400 gravity='face' crop='fill'}}")
                 .ui.center.aligned.header
-                    if profile.first_name
-                        |#{profile.first_name} #{profile.last_name}
-                    |(#{username})
+                    |#{username}
                     unless is_user
                         +staus_indicator
-                if is_user
-                    a.ui.fluid.large.button(href="/account/profile/edit/#{_id}") 
-                        i.pencil.icon
-                        |Edit
-                .ui.vertical.large.fluid.pointing.menu
-                    a.item(href="/profile/#{username}/about" class="{{isActiveRoute name='profile_about'}}") 
+                .ui.vertical.labeled.fluid.icon.menu
+                    a.item(href="/u/#{username}/about" class="{{isActiveRoute name='profile_about'}}") 
                         i.info.icon
-                        |About
                     unless is_user
-                        a.item(href="/profile/#{username}/contact" class="{{isActiveRoute name='profile_contact'}}") 
+                        a.item(href="/u/#{username}/contact" class="{{isActiveRoute name='profile_contact'}}") 
                             i.phone.icon
-                            |Contact #{name}
-                    a.item(href="/profile/#{username}/karma" class="{{isActiveRoute name='profile_karma'}}") 
+                            // |contact #{name}
+                    a.item(href="/u/#{username}/karma" class="{{isActiveRoute name='profile_karma'}}") 
                         i.heartbeat.icon
-                        | Karma
-            if is_person_by_username
-                .ui.vertical.fluid.pointing.menu
-                    a.item(href="/profile/#{currentUser.username}/account" class="{{isActiveRoute name='account_settings'}}") 
-                        i.settings.icon
-                        |Account Settings
-                .ui.vertical.fluid.menu
-                    a#logout.item(href="#" data-position="bottom center" data-content="Log Out")
-                        i.sign.out.icon
-                        |Log Out
+                        // | karma
+                    a.item(href='/u/#{username}/favorites' class="{{isActivePath '/u/#{username}/favorites'}}")
+                        i.heart.icon
+                        // |favorites
+                    a.item(href='/u/#{username}/clouds' class="{{isActivePath '/u/#{username}/clouds'}}")
+                        i.cloud.icon
+                        // |clouds
+                .ui.vertical.labeled.fluid.icon.menu
+                    if is_person_by_username
+                        a.item(href="/u/#{_id}/edit") 
+                            i.pencil.icon
+
+                        a.item(href="/u/#{currentUser.username}/account" class="{{isActiveRoute name='account_settings'}}") 
+                            i.settings.icon
+                            // |settings
+                        a#logout.item(href="#" data-position="bottom center" data-content="Log Out")
+                            i.sign.out.icon
+                            // |log out
+    
 
 
-        .ten.wide.column
+        .twelve.wide.column
             +Template.dynamic template=profile_content
 
 
@@ -46,29 +82,19 @@ template(name='profile_about')
     with person
         h1.ui.center.aligned.header 
             i.info.icon
-            |About
         .ui.hidden.divider
         if tags
-            .ui.header 
-                i.tags.icon
-                | Tags
+            i.tags.icon
             each tags
-                .user_tag.ui.large.label #{this}
-        if profile.location
+                .user_tag.ui.label #{this}
+        if profile.sex_position
             .ui.header 
-                i.location.arrow.icon
-                | #{profile.location}
-        if profile.about_me
-            .ui.header About Me
-            |#{profile.about_me}
-        .ui.header My True Colors Are:
-        +color_dots
-        if profile.if_knew_me
-            .ui.header If you really knew me you would know…
-            |#{profile.if_knew_me}
-        if profile.if_not_working
-            .ui.header If I am not at work or in class then I am probably…
-            |#{profile.if_not_working}
+                |favorite sex position:
+                | #{profile.sex_position}
+        if profile.spirit_animal
+            .ui.header 
+                |spirit animal:
+                | #{profile.spirit_animal}
 
         
         

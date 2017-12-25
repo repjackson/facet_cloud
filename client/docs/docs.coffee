@@ -26,7 +26,7 @@ Template.view_doc.onCreated ->
             type = null
             author_id = null
             parent_id = FlowRouter.getParam('doc_id')
-            tag_limit = 42
+            tag_limit = 20
             doc_limit = 20
             view_published = 
                 if Session.equals('admin_mode', true) then null else Session.get('view_published')
@@ -250,6 +250,12 @@ Template.view_doc.events
             parent_id: @parent_id
         FlowRouter.go "/view/#{new_older_sibling_id}" 
 
+      
+    'click #toggle_admin_mode': ->
+        if Session.equals('admin_mode', true) then Session.set('admin_mode', false)
+        else if Session.equals('admin_mode', false) then Session.set('admin_mode', true)
+        Session.set 'editing_id', null
+        Session.set 'view_published', null
       
       
             
